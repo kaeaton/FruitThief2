@@ -16,7 +16,7 @@ interface FruitTreeDAO {
      * @param tree New tree to be added.
      */
     @Insert
-    suspend fun insert(tree: Tree)
+    fun insert(tree: Tree)
 
     /**
      * Function to insert a Fruit entity into fruit_info_table.
@@ -79,4 +79,7 @@ interface FruitTreeDAO {
      */
     @Query("SELECT tree.* FROM tree_info_table tree INNER JOIN fruit_info_table ON fruit_type = fruitId WHERE fruit_season LIKE '%'+:month+'%'")
     suspend fun getInSeasonTrees(month: String): Array<Tree>
+
+    @Query("SELECT fruit_name FROM fruit_info_table")
+    fun getFruitNamesList(): Array<String>
 }

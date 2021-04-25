@@ -39,8 +39,8 @@ class FruitTreeDatabaseTest {
     @Throws(Exception::class)
     fun insertFruit(){
         PopulateFruitTable(fruitTreeDao);
-        assertEquals("Banana", fruitTreeDao.getFruitByName("Banana").fruitName)
+        assertEquals("Apple", fruitTreeDao.getFruitByName("Apple").fruitName)
         PopulateFruitTable(fruitTreeDao)
-        assertEquals("IJKL", fruitTreeDao.getFruitByName("Apple").fruitSeason)
+        assertEquals("KLABC", fruitTreeDao.getFruitByName("Pomelo").fruitSeason)
     }
 }
