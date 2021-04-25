@@ -11,4 +11,5 @@ class FruitThiefApplication() : Application() {
 
         Timber.plant(Timber.DebugTree())
     }
+
 }
