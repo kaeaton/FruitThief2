@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include
-        layout="@layout/activity_maps"
+    <fragment
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -15,6 +15,11 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,7 +48,13 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        displayMap()
+        val mapFragment = supportFragmentManager.findFragmentById(
+            R.id.map_fragment
+        ) as? SupportMapFragment
+        mapFragment?.getMapAsync { googleMap ->
+            addMarkers(googleMap)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,8 +68,20 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun displayMap() {
-        val intent = Intent(this, MapsActivity::class.java).apply { }
-        startActivity(intent)
+    /**
+     * Adds marker representations of the places list on the provided GoogleMap object
+     */
+    private fun addMarkers(googleMap: GoogleMap) {
+//        places.forEach { place ->
+//            val marker = googleMap.addMarker(
+//                MarkerOptions()
+//                    .title(place.name)
+//                    .position(place.latLng)
+//            )
+//        }
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }
