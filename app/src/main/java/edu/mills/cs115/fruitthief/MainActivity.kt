@@ -1,7 +1,9 @@
 package edu.mills.cs115.fruitthief
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        displayMap()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,5 +55,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    fun displayMap() {
+        val intent = Intent(this, MapsActivity::class.java).apply { }
+        startActivity(intent)
     }
 }
