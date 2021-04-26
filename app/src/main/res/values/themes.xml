@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/cinzel</item>
         <item name="fontFamily">@font/cinzel</item>
-        
+
     </style>
 
     <style name="Theme.FruitThief.NoActionBar">
