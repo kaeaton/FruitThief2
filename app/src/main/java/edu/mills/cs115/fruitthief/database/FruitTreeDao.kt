@@ -11,46 +11,54 @@ import androidx.room.*
 @Dao
 interface FruitTreeDAO {
     /**
-     * Function to insert a Tree entity into tree_info_table.
      *
      * @param tree New tree to be added.
+     *
      */
     @Insert
     fun insert(tree: Tree)
 
     /**
-     * Function to insert a Fruit entity into fruit_info_table.
-     * fruit_info_table is prepopulated, so the user should never access it.
      *
+     * fruit_info_table is prepopulated, so insert(fruit) should only be used on app's first run.
      * @param fruit Fruit to be added.
      */
     @Insert
     fun insert(fruit: Fruit)
 
     /**
-     * Function to update a Tree's info.
      *
      * @param tree Tree with updated information.
      */
     @Update
     suspend fun update(tree: Tree)
 
+    /**
+     *
+     * @param tree Tree to be deleted.
+     */
     @Delete
-    suspend fun delete(tree: Tree)
+    suspend fun deleteTree(tree: Tree)
 
     @Query("DELETE FROM tree_info_table")
     suspend fun clearTrees()
 
+    /**
+     *
+     * Only for test purposes, should never actually be used.
+     */
     @Query("DELETE FROM fruit_info_table")
-    suspend fun clear()
+    suspend fun clearFruitTable()
 
     /**
+     *
      * @return Array of all Fruit
      */
     @Query("SELECT * FROM fruit_info_table")
     fun getFruitList(): Array<Fruit>
 
     /**
+     *
      * @return Array of all Trees
      */
     @Query("SELECT * FROM tree_info_table")
@@ -74,12 +82,16 @@ interface FruitTreeDAO {
 
     /**
      *
-     * @param month String of a single character representing the current month. A-l = Jan-Dec.
+     * @param month String of a single character representing the current month. A-L = Jan-Dec.
      * @return Array of all Trees whose fruit is currently in season
      */
     @Query("SELECT tree.* FROM tree_info_table tree INNER JOIN fruit_info_table ON fruit_type = fruitId WHERE fruit_season LIKE '%'+:month+'%'")
     suspend fun getInSeasonTrees(month: String): Array<Tree>
 
+    /**
+     *
+     * @return Array of all fruit names
+     */
     @Query("SELECT fruit_name FROM fruit_info_table")
     fun getFruitNamesList(): Array<String>
 }
