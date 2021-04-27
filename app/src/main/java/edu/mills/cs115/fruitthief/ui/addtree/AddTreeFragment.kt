@@ -34,22 +34,6 @@ class AddTreeFragment : Fragment() {
         val spinner = view.findViewById(R.id.addTreeSpinner) as Spinner
         val button = view.findViewById(R.id.addTreeButton) as Button
 
-        spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>, view: View,
-                position: Int, id: Long
-            ) {
-                val item = adapterView.getItemAtPosition(position)
-                if (item != null) {
-                    fruit = item.toString()
-                }
-            }
-
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                // TODO Auto-generated method stub
-            }
-        }
-
         val dataSource =
             FruitTreeDatabase.getInstance(requireNotNull(this.activity).application).fruitTreeDAO
 
@@ -64,8 +48,27 @@ class AddTreeFragment : Fragment() {
         spinner.adapter = dataAdapter
 
 
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>, view: View,
+                position: Int, id: Long
+            ) {
+                val item = adapterView.getItemAtPosition(position)
+                if (item != null) {
+                    fruit = item.toString()
+                } else { fruit = "Unknown"}
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                fruit = "Unknown"
+            }
+        }
+
+
         button.setOnClickListener{
             dataSource.insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
+            // need additional action to add tree to map?
+            // TODO view.findNavController().actionAddTreeFragmentToMap
         }
 
         return view.rootView
