@@ -25,7 +25,9 @@ class AddTreeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentAddTreeBinding.inflate(inflater)
+        val binding = DataBindingUtil
+            .inflate<FragmentAddTreeBinding>(
+                inflater, R.layout.fragment_add_tree, container, false)
 
         viewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
 
