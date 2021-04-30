@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.databinding.FragmentAddTreeBinding
+import kotlinx.coroutines.runBlocking
 
 
 class AddTreeFragment : Fragment() {
@@ -36,11 +37,13 @@ class AddTreeFragment : Fragment() {
 
         binding.addTreeSpinner.adapter =
             this.context?.let {
-                ArrayAdapter(
-                    it,
-                    R.id.addTreeSpinner,
-                    dataSource.getFruitNamesList()
-                )
+                runBlocking {
+                    ArrayAdapter(
+                        it,
+                        R.id.addTreeSpinner,
+                        dataSource.getFruitNamesList()
+                    )
+                }
             }
 
         binding.addTreeSpinner.onItemSelectedListener = object : OnItemSelectedListener {

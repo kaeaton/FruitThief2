@@ -16,7 +16,7 @@ interface FruitTreeDAO {
      *
      */
     @Insert
-    fun insert(tree: Tree)
+    suspend fun insert(tree: Tree)
 
     /**
      *
@@ -24,7 +24,7 @@ interface FruitTreeDAO {
      * @param fruit Fruit to be added.
      */
     @Insert
-    fun insert(fruit: Fruit)
+    suspend fun insert(fruit: Fruit)
 
     /**
      *
@@ -55,7 +55,7 @@ interface FruitTreeDAO {
      * @return Array of all Fruit
      */
     @Query("SELECT * FROM fruit_info_table")
-    fun getFruitList(): Array<Fruit>
+    suspend fun getFruitList(): Array<Fruit>
 
     /**
      *
@@ -70,7 +70,7 @@ interface FruitTreeDAO {
      * @return Fruit that matches given string
      */
     @Query("SELECT * FROM fruit_info_table WHERE fruit_name = :fruitName")
-    fun getFruitByName(fruitName: String): Fruit
+    suspend fun getFruitByName(fruitName: String): Fruit
 
     /**
      *
@@ -93,5 +93,5 @@ interface FruitTreeDAO {
      * @return Array of all fruit names
      */
     @Query("SELECT fruit_name FROM fruit_info_table")
-    fun getFruitNamesList(): Array<String>
+    suspend fun getFruitNamesList(): Array<String>
 }

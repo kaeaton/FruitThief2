@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.Tree
+import kotlinx.coroutines.runBlocking
 
 class AddTreeViewModel : ViewModel() {
     var fruit = ""
@@ -14,8 +15,10 @@ class AddTreeViewModel : ViewModel() {
     }
 
     fun onButtonClicked(dataSource: FruitTreeDAO){
-        dataSource
-            .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
-        // need additional action to add tree to map?
+        runBlocking {
+            dataSource
+                .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
+            // need additional action to add tree to map?
+        }
     }
 }
