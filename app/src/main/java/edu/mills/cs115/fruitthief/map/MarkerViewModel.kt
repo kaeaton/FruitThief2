@@ -3,6 +3,7 @@ package edu.mills.cs115.fruitthief.map
 import android.app.Application
 import androidx.lifecycle.*
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
+import edu.mills.cs115.fruitthief.database.PopulateFruitTable
 import edu.mills.cs115.fruitthief.database.PopulateTreeTable
 import edu.mills.cs115.fruitthief.database.Tree
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class MarkerViewModel(
     init {
         // temporarily seeding the database
         PopulateTreeTable(database)
+        PopulateFruitTable(database)
 
         initializeCurrentFruitTrees()
     }
