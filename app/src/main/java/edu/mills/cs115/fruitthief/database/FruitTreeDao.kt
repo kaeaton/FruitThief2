@@ -1,5 +1,6 @@
 package edu.mills.cs115.fruitthief.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 /**
@@ -62,7 +63,8 @@ interface FruitTreeDAO {
      * @return Array of all Trees
      */
     @Query("SELECT * FROM tree_info_table")
-    suspend fun getTreeList(): Array<Tree>
+//    suspend fun getTreeList(): Array<Tree>
+    fun getTreeList(): LiveData<List<Tree>>
 
     /**
      *
@@ -78,7 +80,8 @@ interface FruitTreeDAO {
      * @return Array of Trees with fruit matching given type
      */
     @Query("SELECT tree.* FROM tree_info_table tree INNER JOIN fruit_info_table ON fruit_type = fruitId WHERE fruit_name = :fruit")
-    suspend fun filterByFruit(fruit: String): Array<Tree>
+//    suspend fun filterByFruit(fruit: String): Array<Tree>
+    suspend fun filterByFruit(fruit: String): List<Tree>
 
     /**
      *

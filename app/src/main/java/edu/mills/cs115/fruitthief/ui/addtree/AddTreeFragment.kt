@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.model.LatLng
+import edu.mills.cs115.fruitthief.R
+import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
+import edu.mills.cs115.fruitthief.database.Tree
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.google.android.gms.maps.SupportMapFragment
-import edu.mills.cs115.fruitthief.R
-import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.databinding.FragmentAddTreeBinding
 import kotlinx.coroutines.runBlocking
+
 
 
 class AddTreeFragment : Fragment() {
