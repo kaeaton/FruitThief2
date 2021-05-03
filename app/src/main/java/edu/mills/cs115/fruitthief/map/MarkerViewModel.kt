@@ -10,26 +10,37 @@ class MarkerViewModel(
     val database: FruitTreeDAO,
     application: Application) : ViewModel() {
 
-    val allTrees = database.getTreeList()
+    val allTrees: LiveData<List<Tree>> = liveData {
+        val data = database.getTreeList()
+        emit(data)
+    }
+
+    val specificFruitTrees: LiveData<List<Tree>> = liveData {
+        val data = database.filterByFruit("Lemon")
+        emit(data)
+    }
+
     var selectedFruit = "Lemon"
     var currentFruitTrees = MutableLiveData<List<Tree?>>()
 
     init {
-        initializeCurrentFruitTrees()
     }
 
-    private fun initializeCurrentFruitTrees() {
-        viewModelScope.launch {
-            currentFruitTrees.value = getCurrentFruitTreesFromDatabase()
-        }
-    }
-
-    private suspend fun getCurrentFruitTreesFromDatabase(): List<Tree?> {
-        var trees = database.filterByFruit(selectedFruit)
-//        if (trees.isEmpty()) {
-//            trees = null
+//    private fun initializeCurrentFruitTrees() {
+//        viewModelScope.launch {
+//            currentFruitTrees.value = getCurrentFruitTreesFromDatabase()
 //        }
-        return trees
-    }
+//    }
+
+
+
+//    private suspend fun getCurrentFruitTreesFromDatabase(): LiveData<List<Tree?>> {
+//        liveData {
+//        var trees = database.getTreeList()
+////        if (trees.isEmpty()) {
+////            trees = null
+////        }
+//        return trees
+//    }
 
 }
