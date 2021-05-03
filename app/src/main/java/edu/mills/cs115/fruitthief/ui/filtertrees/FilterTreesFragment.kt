@@ -1,28 +1,22 @@
-package edu.mills.cs115.fruitthief.ui.addtree
+package edu.mills.cs115.fruitthief.ui.filtertrees
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.model.LatLng
+import androidx.lifecycle.ViewModelProvider
 import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
-import edu.mills.cs115.fruitthief.database.Tree
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import com.google.android.gms.maps.SupportMapFragment
-import edu.mills.cs115.fruitthief.databinding.FragmentAddTreeBinding
+import edu.mills.cs115.fruitthief.databinding.FragmentFilterTreesBinding
 import kotlinx.coroutines.runBlocking
 
-
-
-class AddTreeFragment : Fragment() {
-    private lateinit var viewModel: AddTreeViewModel
+class FilterTreesFragment : Fragment() {
+    private lateinit var viewModel: FilterTreesViewModel
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -31,30 +25,31 @@ class AddTreeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil
-            .inflate<FragmentAddTreeBinding>(
-                inflater, R.layout.fragment_add_tree, container, false)
+            .inflate<FragmentFilterTreesBinding>(
+                inflater, R.layout.fragment_filter_trees, container, false)
 
-        viewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FilterTreesViewModel::class.java)
 
         val dataSource =
             FruitTreeDatabase.getInstance(requireNotNull(this.activity).application).fruitTreeDAO
 
-        binding.addTreeSpinner.adapter =
+        binding.filterSpinner.adapter =
             this.context?.let {
                 runBlocking {
                     ArrayAdapter(
                         it,
-                        R.id.addTreeSpinner,
+                        R.id.filterSpinner,
                         dataSource.getFruitNamesList()
                     )
                 }
             }
 
         runBlocking {
-            binding.addTreeSpinner.setSelection(dataSource.getFruitNamesList().size-2)
+            binding.filterSpinner.setSelection(dataSource.getFruitNamesList().size-1)
         }
 
-        binding.addTreeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.filterSpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>, view: View,
                 position: Int, id: Long
@@ -62,21 +57,19 @@ class AddTreeFragment : Fragment() {
                 val item = adapterView.getItemAtPosition(position)
                 if (item != null) {
                     viewModel.onItemSelected(item.toString())
-                } else { viewModel.onItemSelected("Unknown")}
+                } else { viewModel.onItemSelected("Any")}
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                viewModel.onItemSelected("Unknown")
+                viewModel.onItemSelected("Any")
             }
         }
 
-
-        binding.addTreeButton.setOnClickListener{
+        binding.filterButton.setOnClickListener{
             viewModel.onButtonClicked(dataSource)
-            // TODO view.findNavController().actionAddTreeFragmentToMap
         }
 
         return binding.root
-    }
 
+    }
 }
