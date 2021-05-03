@@ -15,13 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.map.MapFragment
-import edu.mills.cs115.fruitthief.map.Markers
 
 class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
@@ -68,7 +62,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main_menu_drawer, menu)
         return true
     }
 

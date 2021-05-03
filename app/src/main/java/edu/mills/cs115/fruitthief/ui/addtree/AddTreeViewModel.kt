@@ -7,7 +7,7 @@ import edu.mills.cs115.fruitthief.database.Tree
 import kotlinx.coroutines.runBlocking
 
 class AddTreeViewModel : ViewModel() {
-    var fruit = ""
+    var fruit = "Unknown"
     var loc = LatLng(0.0, 0.0)
 
     fun onItemSelected(string: String){
