@@ -17,6 +17,7 @@ import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -42,7 +43,7 @@ class MapFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
 
-        trees = viewModel.allTrees
+//        trees = viewModel.allTrees
         treesToDisplay = viewModel.allTrees
 
         // Inflate the layout for this fragment
@@ -52,7 +53,6 @@ class MapFragment : Fragment() {
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
             mapReady = true
-            updateMap()
         }
 
         return rootView
@@ -62,22 +62,20 @@ class MapFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         treesToDisplay.observe(viewLifecycleOwner, Observer {
-//            trees -> this.treesToDisplay = trees
-            trees = this.treesToDisplay
-            updateMap()
+            trees = treesToDisplay
+            if(mapReady) {
+                updateMap()
+            }
         })
     }
 
-    fun updateMap() {
+    private fun updateMap() {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(37.892860, -122.078400)))
-//        if (mapReady && trees != null) {
-            trees.value?.forEach {
-                tree ->
-                val marker = LatLng(tree.lat, tree.lng)
-                mMap.addMarker(
-                    MarkerOptions().position(marker).title(tree.fruit.toString())
-                )
-            }
-//        }
+        trees.value?.forEach { tree ->
+            val marker = LatLng(tree.lat, tree.lng)
+            mMap.addMarker(
+                MarkerOptions().position(marker).title(tree.fruit.toString())
+            )
+        }
     }
 }
