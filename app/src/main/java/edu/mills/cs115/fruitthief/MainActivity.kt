@@ -1,9 +1,7 @@
 package edu.mills.cs115.fruitthief
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -15,19 +13,31 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.gms.maps.CameraUpdateFactory
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import edu.mills.cs115.fruitthief.map.MapFragment
+import edu.mills.cs115.fruitthief.map.Markers
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<MapFragment>(R.id.fragment_container_view)
+            }
+        }
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -48,13 +58,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        val mapFragment = supportFragmentManager.findFragmentById(
-            R.id.map_fragment
-        ) as? SupportMapFragment
-        mapFragment?.getMapAsync { googleMap ->
-            addMarkers(googleMap)
-        }
 
+//        val mapFragment = SupportMapFragment.newInstance()
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.mapFragment, mapFragment)
+//            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,20 +77,11 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    /**
-     * Adds marker representations of the places list on the provided GoogleMap object
-     */
-    private fun addMarkers(googleMap: GoogleMap) {
-//        places.forEach { place ->
-//            val marker = googleMap.addMarker(
-//                MarkerOptions()
-//                    .title(place.name)
-//                    .position(place.latLng)
-//            )
-//        }
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
+//    override fun onMapReady(googleMap: GoogleMap) {
+//        googleMap.addMarker(
+//            MarkerOptions()
+//                .position(LatLng(0.0, 0.0))
+//                .title("Marker")
+//        )
+//    }
 }
