@@ -32,15 +32,16 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            // TODO navigate to add tree frag
-        }
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
         navView.setupWithNavController(navController)
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+
+        }
 
 //        val mapFragment = SupportMapFragment.newInstance()
 //        supportFragmentManager
@@ -67,4 +68,5 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 //                .title("Marker")
 //        )
 //    }
+
 }
