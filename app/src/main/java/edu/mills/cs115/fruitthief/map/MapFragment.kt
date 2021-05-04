@@ -26,6 +26,7 @@ import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
 import edu.mills.cs115.fruitthief.ui.addtree.AddTreeViewModel
+import timber.log.Timber
 
 class MapFragment : Fragment() {
 
@@ -56,12 +57,7 @@ class MapFragment : Fragment() {
         treesToDisplay = viewModel.allTrees
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
-        // Inflate the layout for this fragment
-//        val binding = DataBindingUtil.inflate<FragmentMapBinding>(
-//            inflater, R.layout.fragment_map, container, false)
-//        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val binding = FragmentMapBinding.inflate(inflater)
-//        binding.viewModel = viewModel
 
         mapViewModel.navigateToAddTree.observe(viewLifecycleOwner,
             Observer<Boolean> { navigate ->
@@ -80,9 +76,27 @@ class MapFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener { view ->
-            currentLocation()
-            mapViewModel.setLocation(currentLocation)
-            mapViewModel.onFabClicked()
+
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) -> {
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location: Location? ->
+                            if (location != null) {
+                                currentLocation = LatLng(location.latitude, location.longitude)
+                                Timber.i("Current location: " + currentLocation.toString())
+                                Timber.i("Current latitude: " + currentLocation.latitude.toString())
+                                Timber.i("Current longitude: " + currentLocation.longitude.toString())
+
+                                mapViewModel.setLocation(currentLocation)
+                                mapViewModel.onFabClicked()
+                            }
+                            // Got last known location. In some rare situations this can be null.
+                        }
+                }
+            }
         }
 
         return binding.root
