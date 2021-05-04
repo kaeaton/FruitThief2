@@ -20,6 +20,7 @@ import edu.mills.cs115.fruitthief.database.Tree
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.SupportMapFragment
 import edu.mills.cs115.fruitthief.databinding.FragmentAddTreeBinding
 import kotlinx.coroutines.runBlocking
@@ -78,7 +79,8 @@ class AddTreeFragment : Fragment() {
 
         binding.addTreeButton.setOnClickListener{
             viewModel.onButtonClicked(dataSource)
-            // TODO view.findNavController().actionAddTreeFragmentToMap
+            val navController = findNavController()
+            navController.navigate(R.id.action_addTreeFragment_to_mapFragment)
         }
 
         return binding.root
