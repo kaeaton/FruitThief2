@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
+import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -18,6 +20,7 @@ import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
+import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
 import timber.log.Timber
 
 /**
@@ -48,7 +51,9 @@ class MapFragment : Fragment() {
         treesToDisplay = viewModel.allTrees
 
         // Inflate the layout for this fragment
-        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
+        val binding = DataBindingUtil.inflate<FragmentMapBinding>(
+            inflater, R.layout.fragment_map, container, false)
+//        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.frag_map) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
@@ -56,12 +61,11 @@ class MapFragment : Fragment() {
             mapReady = true
         }
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
+        binding.fab.setOnClickListener { view ->
+            
         }
 
-        return rootView
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
