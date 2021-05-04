@@ -1,29 +1,27 @@
 package edu.mills.cs115.fruitthief.map
 
-import android.app.Application
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.R
-import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import timber.log.Timber
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MapFragment : Fragment() {
 
     private lateinit var mMap: GoogleMap
@@ -32,6 +30,8 @@ class MapFragment : Fragment() {
     private var mapReady = false
     private lateinit var treesToDisplay: LiveData<List<Tree>>
     private lateinit var trees: LiveData<List<Tree>>
+    private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +43,8 @@ class MapFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
 
-//        trees = viewModel.allTrees
         treesToDisplay = viewModel.allTrees
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
         // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.fragment_map, container, false)
@@ -54,23 +54,21 @@ class MapFragment : Fragment() {
             mMap = googleMap
             mapReady = true
         }
-
         return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         treesToDisplay.observe(viewLifecycleOwner, Observer {
             trees = treesToDisplay
-            if(mapReady) {
+            if (mapReady) {
                 updateMap()
             }
         })
     }
 
     private fun updateMap() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(37.892860, -122.078400)))
+        cameraLocation()
         trees.value?.forEach { tree ->
             val marker = LatLng(tree.lat, tree.lng)
             mMap.addMarker(
@@ -79,4 +77,28 @@ class MapFragment : Fragment() {
         }
     }
 
+    private fun moveCamera() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+    }
+
+    private fun cameraLocation() {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        if (location != null) {
+                            locationCoordinates = LatLng(location.latitude, location.longitude)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                        } else {
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                        }
+                        // Got last known location. In some rare situations this can be null.
+                    }
+            }
+        }
+//        return locationCoordinates
+    }
 }
