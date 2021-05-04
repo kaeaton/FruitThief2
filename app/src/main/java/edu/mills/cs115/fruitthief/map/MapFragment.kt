@@ -98,7 +98,7 @@ class MapFragment : Fragment() {
     }
 
     private fun updateMap() {
-        cameraLocation()
+//        cameraLocation()
         trees.value?.forEach { tree ->
             val marker = LatLng(tree.lat, tree.lng)
             mMap.addMarker(
