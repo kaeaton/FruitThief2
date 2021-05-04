@@ -2,11 +2,13 @@ package edu.mills.cs115.fruitthief
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.navigation.findNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.navigation.NavController
@@ -19,11 +21,13 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = findNavController(R.id.nav_host_fragment)
+        drawerLayout = binding.drawerLayout
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -47,17 +51,23 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.
+        onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
-        return NavigationUI.navigateUp(navController, binding.drawerLayout)
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
     private fun setUpNavigation() {
+        NavigationUI.setupWithNavController(binding.navView, navController)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController, binding.drawerLayout)
-        binding.navView.setupWithNavController(navController)
+        NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
 
 //        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
 //            if (destination.id != R.id.mapFragment) {
