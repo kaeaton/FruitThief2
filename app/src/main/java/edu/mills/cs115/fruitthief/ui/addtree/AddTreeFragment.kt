@@ -77,7 +77,7 @@ class AddTreeFragment : Fragment() {
 
 
         binding.addTreeButton.setOnClickListener{
-            viewModel.onButtonClicked(dataSource, requireContext())
+            viewModel.onButtonClicked(dataSource)
             // TODO view.findNavController().actionAddTreeFragmentToMap
         }
 

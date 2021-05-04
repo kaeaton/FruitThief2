@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -27,11 +28,12 @@ class AddTreeViewModel : ViewModel() {
         fruit = string
     }
 
-    fun onButtonClicked(dataSource: FruitTreeDAO, context: Context){
+    fun onButtonClicked(dataSource: FruitTreeDAO){
         runBlocking {
             dataSource
                 .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
         }
+
     }
 
     fun onFabClicked() {
