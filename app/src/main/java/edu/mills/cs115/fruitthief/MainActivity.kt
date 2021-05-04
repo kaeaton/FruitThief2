@@ -9,18 +9,21 @@ import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.navigation.NavDestination
 import androidx.navigation.ui.*
+import edu.mills.cs115.fruitthief.databinding.ActivityMainBinding
 import edu.mills.cs115.fruitthief.map.MapFragment
 
 class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
-    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -29,19 +32,13 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
             }
         }
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-
-        navView.setupWithNavController(navController)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
 
         }
+
+        setUpNavigation()
 
 //        val mapFragment = SupportMapFragment.newInstance()
 //        supportFragmentManager
@@ -58,7 +55,24 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        return NavigationUI.navigateUp(navController, binding.drawerLayout)
+    }
+
+    private fun setUpNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+
+        setSupportActionBar(toolbar)
+        setupActionBarWithNavController(navController, binding.drawerLayout)
+        binding.navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
+            if (destination.id != R.id.mapFragment2) {
+                findViewById<FloatingActionButton>(R.id.fab).hide()
+            } else {
+                findViewById<FloatingActionButton>(R.id.fab).show()
+            }
+        }
     }
 
 //    override fun onMapReady(googleMap: GoogleMap) {
