@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.Tree
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class AddTreeViewModel : ViewModel() {
     var fruit = "Unknown"
@@ -32,6 +33,7 @@ class AddTreeViewModel : ViewModel() {
         runBlocking {
             dataSource
                 .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
+            Timber.i("tree table: %s", dataSource.getTreeList())
         }
 
     }

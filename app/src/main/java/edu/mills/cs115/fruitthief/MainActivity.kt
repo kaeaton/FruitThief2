@@ -28,7 +28,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
+import edu.mills.cs115.fruitthief.database.PopulateFruitTable
+import edu.mills.cs115.fruitthief.database.PopulateTreeTable
 import edu.mills.cs115.fruitthief.map.MapFragment
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
@@ -42,6 +46,16 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = findNavController(R.id.nav_host_fragment)
         drawerLayout = binding.drawerLayout
+        val application = requireNotNull(this).application
+        val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
+
+        // clear tables for testing
+        runBlocking {
+            dataSource.clearFruitTable()
+            dataSource.clearTrees()
+        }
+        PopulateFruitTable(dataSource)
+//        PopulateTreeTable(dataSource)
 
         // GPS Permission
         if (ContextCompat.checkSelfPermission(this@MainActivity,
