@@ -29,6 +29,7 @@ class MarkerViewModel(
 
     init {
         // temporarily seeding the database
+        PopulateFruitTable(database)
         PopulateTreeTable(database)
         PopulateFruitTable(database)
 

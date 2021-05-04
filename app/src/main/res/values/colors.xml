@@ -8,7 +8,7 @@
     <color name="secondaryDarkColor">#c58e6e</color>
     <color name="primaryTextColor">#102305</color>
     <color name="primaryTextColorLight">#234C0B</color>
-    <color name="secondaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#3A3A3A</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

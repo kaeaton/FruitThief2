@@ -1,6 +1,7 @@
 package edu.mills.cs115.fruitthief.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,7 +23,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
-import timber.log.Timber
+import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
+import edu.mills.cs115.fruitthief.ui.addtree.AddTreeViewModel
 
 class MapFragment : Fragment() {
 
@@ -30,6 +34,8 @@ class MapFragment : Fragment() {
     private var mapReady = false
     private lateinit var treesToDisplay: LiveData<List<Tree>>
     private lateinit var trees: LiveData<List<Tree>>
+    private lateinit var mapViewModel: AddTreeViewModel
+    private lateinit var currentLocation: LatLng
     private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -42,19 +48,43 @@ class MapFragment : Fragment() {
         viewModelFactory = MarkerViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
+        mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
+        currentLocation = LatLng(0.0, 0.0)
 
         treesToDisplay = viewModel.allTrees
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
         // Inflate the layout for this fragment
-        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
+//        val binding = DataBindingUtil.inflate<FragmentMapBinding>(
+//            inflater, R.layout.fragment_map, container, false)
+//        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
+        val binding = FragmentMapBinding.inflate(inflater)
+//        binding.viewModel = viewModel
+
+        mapViewModel.navigateToAddTree.observe(viewLifecycleOwner,
+            Observer<Boolean> { navigate ->
+                if (navigate) {
+                    val navController = findNavController()
+                    navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
+                    mapViewModel.onNavigatedToFilter()
+                }
+            })
+
         val mapFragment =
-            childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
+            childFragmentManager.findFragmentById(R.id.frag_map) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
             mapReady = true
         }
-        return rootView
+
+        binding.fab.setOnClickListener { view ->
+            currentLocation()
+            mapViewModel.setLocation(currentLocation)
+            mapViewModel.onFabClicked()
+        }
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -77,11 +107,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun moveCamera() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
-    }
-
-    private fun cameraLocation() {
+    private fun currentLocation() {
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -90,10 +116,8 @@ class MapFragment : Fragment() {
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         if (location != null) {
-                            locationCoordinates = LatLng(location.latitude, location.longitude)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
-                        } else {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                            currentLocation = LatLng(location.latitude, location.longitude)
+
                         }
                         // Got last known location. In some rare situations this can be null.
                     }
@@ -101,4 +125,5 @@ class MapFragment : Fragment() {
         }
 //        return locationCoordinates
     }
+
 }
