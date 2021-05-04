@@ -51,11 +51,12 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
         // clear tables for testing
         runBlocking {
+            // clear for testing
             dataSource.clearFruitTable()
-            dataSource.clearTrees()
+//            dataSource.clearTrees()
+            PopulateFruitTable(dataSource)
+            PopulateTreeTable(dataSource)
         }
-        PopulateFruitTable(dataSource)
-//        PopulateTreeTable(dataSource)
 
         // GPS Permission
         if (ContextCompat.checkSelfPermission(this@MainActivity,
