@@ -2,10 +2,7 @@ package edu.mills.cs115.fruitthief.map
 
 import android.app.Application
 import androidx.lifecycle.*
-import edu.mills.cs115.fruitthief.database.FruitTreeDAO
-import edu.mills.cs115.fruitthief.database.PopulateFruitTable
-import edu.mills.cs115.fruitthief.database.PopulateTreeTable
-import edu.mills.cs115.fruitthief.database.Tree
+import edu.mills.cs115.fruitthief.database.*
 import kotlinx.coroutines.launch
 
 class MarkerViewModel(
@@ -14,6 +11,7 @@ class MarkerViewModel(
 
     var selectedFruit = "Lemon"
 
+    lateinit var allFruit: Array<Fruit>
     lateinit var allTrees: LiveData<List<Tree>>
 //    = liveData {
 //         val data = database.getTreeList()
@@ -29,16 +27,24 @@ class MarkerViewModel(
 
     init {
         // temporarily seeding the database
+      
 //        PopulateFruitTable(database)
 //        PopulateTreeTable(database)
 //        PopulateFruitTable(database)
 
         initializeCurrentFruitTrees()
+        initializeAllFruit()
     }
 
     private fun initializeCurrentFruitTrees() {
         viewModelScope.launch {
             allTrees = getAllFruitTreesFromDatabase()
+        }
+    }
+
+    private fun initializeAllFruit() {
+        viewModelScope.launch {
+            allFruit = getAllFruitFromDatabase()
         }
     }
 
@@ -54,6 +60,10 @@ class MarkerViewModel(
             var trees = database.filterByFruit(selectedFruit)
             emit(trees)
         }
+    }
+
+    private suspend fun getAllFruitFromDatabase(): Array<Fruit> {
+        return database.getFruitList()
     }
 
 }

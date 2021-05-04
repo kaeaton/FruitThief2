@@ -5,8 +5,6 @@ import timber.log.Timber
 
 class PopulateTreeTable(fruitTreeDao: FruitTreeDAO) {
 
-    // TODO: update for suspended DAO methods
-
     init {
         runBlocking {
             if (fruitTreeDao.getTreeList().isEmpty()) {
