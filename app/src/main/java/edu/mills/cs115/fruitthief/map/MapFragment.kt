@@ -21,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.R
+import edu.mills.cs115.fruitthief.database.Fruit
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
@@ -102,9 +103,18 @@ class MapFragment : Fragment() {
         trees.value?.forEach { tree ->
             val marker = LatLng(tree.lat, tree.lng)
             mMap.addMarker(
-                MarkerOptions().position(marker).title(tree.fruit.toString())
+                MarkerOptions().position(marker).title(getFruitName(tree.fruit))
             )
         }
+    }
+
+    private fun getFruitName(fruitID: Int): String {
+        viewModel.allFruit.forEach { fruit ->
+            if (fruit.fruitId.equals(fruitID)) {
+                return fruit.fruitName
+            }
+        }
+        return "Unknown Type"
     }
 
     private fun currentLocation() {
