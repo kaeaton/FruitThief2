@@ -30,12 +30,15 @@ class AddTreeViewModel : ViewModel() {
     }
 
     fun onButtonClicked(dataSource: FruitTreeDAO){
+
         runBlocking {
             dataSource
                 .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
             Timber.i("tree table: %s", dataSource.getTreeList())
         }
-
+        Timber.i("TreeViewModel current location: " + loc.toString())
+        Timber.i("TreeViewModel current latitude: " + loc.latitude.toString())
+        Timber.i("TreeViewModel current longitude: " + loc.longitude.toString())
     }
 
     fun onFabClicked() {
