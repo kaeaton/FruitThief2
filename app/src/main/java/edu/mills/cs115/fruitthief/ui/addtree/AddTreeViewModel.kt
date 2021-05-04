@@ -18,7 +18,6 @@ class AddTreeViewModel : ViewModel() {
         runBlocking {
             dataSource
                 .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
-            // need additional action to add tree to map?
         }
     }
 }

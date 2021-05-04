@@ -38,14 +38,14 @@ class FilterTreesFragment : Fragment() {
                 runBlocking {
                     ArrayAdapter(
                         it,
-                        R.id.filterSpinner,
-                        dataSource.getFruitNamesList()
+                        R.layout.support_simple_spinner_dropdown_item,
+                        dataSource.getFruitNamesList().plus("Any")
                     )
                 }
             }
 
         runBlocking {
-            binding.filterSpinner.setSelection(dataSource.getFruitNamesList().size-1)
+            binding.filterSpinner.setSelection(dataSource.getFruitNamesList().size)
         }
 
         binding.filterSpinner.onItemSelectedListener = object :

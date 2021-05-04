@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/mapFragment2">
+    app:startDestination="@id/mapFragment">
     <fragment
-        android:id="@+id/mapFragment2"
+        android:id="@+id/mapFragment"
         android:name="edu.mills.cs115.fruitthief.map.MapFragment"
-        android:label="MapFragment" >
+        android:label="@string/app_name">
         <action
-            android:id="@+id/action_mapFragment2_to_addTreeFragment2"
-            app:destination="@id/addTreeFragment2" />
+            android:id="@+id/action_mapFragment_to_addTreeFragment"
+            app:destination="@id/addTreeFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_filterTreesFragment"
+            app:destination="@id/filterTreesFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterTreesFragment"
         android:name="edu.mills.cs115.fruitthief.ui.filtertrees.FilterTreesFragment"
-        android:label="FilterTreesFragment" />
+        android:label="@string/app_name" />
     <fragment
-        android:id="@+id/addTreeFragment2"
+        android:id="@+id/addTreeFragment"
         android:name="edu.mills.cs115.fruitthief.ui.addtree.AddTreeFragment"
-        android:label="AddTreeFragment" />
+        android:label="@string/app_name" />
 </navigation>

@@ -44,14 +44,14 @@ class AddTreeFragment : Fragment() {
                 runBlocking {
                     ArrayAdapter(
                         it,
-                        R.id.addTreeSpinner,
+                        R.layout.support_simple_spinner_dropdown_item,
                         dataSource.getFruitNamesList()
                     )
                 }
             }
 
         runBlocking {
-            binding.addTreeSpinner.setSelection(dataSource.getFruitNamesList().size-2)
+            binding.addTreeSpinner.setSelection(dataSource.getFruitNamesList().size-1)
         }
 
         binding.addTreeSpinner.onItemSelectedListener = object : OnItemSelectedListener {

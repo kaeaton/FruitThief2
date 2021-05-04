@@ -31,7 +31,6 @@ class PopulateFruitTable(fruitTreeDao: FruitTreeDAO) {
                 fruitTreeDao.insert(Fruit(0, "Pomelo", "KLABC"))
                 fruitTreeDao.insert(Fruit(0, "Tangerine", "KLAB"))
                 fruitTreeDao.insert(Fruit(0, "Unknown", "ABCDEFGHIJKL"))
-                fruitTreeDao.insert(Fruit(0, "Any", "ABCDEFGHIJKL"))
             }
         }
     }

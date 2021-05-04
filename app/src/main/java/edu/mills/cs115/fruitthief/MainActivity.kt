@@ -3,10 +3,7 @@ package edu.mills.cs115.fruitthief
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -38,7 +35,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            navController.navigate(R.id.action_mapFragment2_to_addTreeFragment2)
+            navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
         }
 
         setUpNavigation()
@@ -69,7 +66,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         binding.navView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-            if (destination.id != R.id.mapFragment2) {
+            if (destination.id != R.id.mapFragment) {
                 findViewById<FloatingActionButton>(R.id.fab).hide()
             } else {
                 findViewById<FloatingActionButton>(R.id.fab).show()
