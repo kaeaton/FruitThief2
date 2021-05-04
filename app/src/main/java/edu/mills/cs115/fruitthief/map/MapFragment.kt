@@ -1,11 +1,17 @@
 package edu.mills.cs115.fruitthief.map
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,6 +22,7 @@ import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
+import edu.mills.cs115.fruitthief.ui.addtree.AddTreeViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -30,7 +37,8 @@ class MapFragment : Fragment() {
     private var mapReady = false
     private lateinit var treesToDisplay: LiveData<List<Tree>>
     private lateinit var trees: LiveData<List<Tree>>
-    private lateinit var mapViewModel: MapViewModel
+    private lateinit var mapViewModel: AddTreeViewModel
+    private lateinit var currentLocation: LatLng
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +49,7 @@ class MapFragment : Fragment() {
         viewModelFactory = MarkerViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
-        mapViewModel = ViewModelProvider(this).get(MapViewModel::class.java)
+        mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
 
 //        trees = viewModel.allTrees
         treesToDisplay = viewModel.allTrees
@@ -52,6 +60,7 @@ class MapFragment : Fragment() {
 //        var rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val binding = FragmentMapBinding.inflate(inflater)
 //        binding.viewModel = viewModel
+
         mapViewModel.navigateToAddTree.observe(viewLifecycleOwner,
             Observer<Boolean> { navigate ->
                 if (navigate) {
@@ -69,6 +78,7 @@ class MapFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener { view ->
+            mapViewModel.setLocation(currentLocation)
             mapViewModel.onFabClicked()
         }
 
@@ -94,6 +104,24 @@ class MapFragment : Fragment() {
                 MarkerOptions().position(marker).title(tree.fruit.toString())
             )
         }
+    }
+
+    private fun currentLocation(context: Context) {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        if (location != null) {
+                            currentLocation = LatLng(location.latitude, location.longitude)
+                        }
+                        // Got last known location. In some rare situations this can be null.
+                    }
+            }
+        }
+//        return locationCoordinates
     }
 
 }
