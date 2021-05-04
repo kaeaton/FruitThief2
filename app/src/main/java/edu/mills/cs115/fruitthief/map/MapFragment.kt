@@ -78,4 +78,5 @@ class MapFragment : Fragment() {
             )
         }
     }
+
 }

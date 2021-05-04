@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.ui.*
 import edu.mills.cs115.fruitthief.databinding.ActivityMainBinding
@@ -20,10 +21,12 @@ import edu.mills.cs115.fruitthief.map.MapFragment
 class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        navController = findNavController(R.id.nav_host_fragment)
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-
+            navController.navigate(R.id.action_mapFragment2_to_addTreeFragment2)
         }
 
         setUpNavigation()
@@ -59,7 +62,6 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
     }
 
     private fun setUpNavigation() {
-        val navController = findNavController(R.id.nav_host_fragment)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(toolbar)
