@@ -26,11 +26,6 @@ import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
 import edu.mills.cs115.fruitthief.ui.addtree.AddTreeViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MapFragment : Fragment() {
 
     private lateinit var mMap: GoogleMap
@@ -41,6 +36,7 @@ class MapFragment : Fragment() {
     private lateinit var trees: LiveData<List<Tree>>
     private lateinit var mapViewModel: AddTreeViewModel
     private lateinit var currentLocation: LatLng
+    private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
@@ -56,8 +52,8 @@ class MapFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
         currentLocation = LatLng(0.0, 0.0)
 
-//        trees = viewModel.allTrees
         treesToDisplay = viewModel.allTrees
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
         // Inflate the layout for this fragment
 //        val binding = DataBindingUtil.inflate<FragmentMapBinding>(
@@ -93,17 +89,16 @@ class MapFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         treesToDisplay.observe(viewLifecycleOwner, Observer {
             trees = treesToDisplay
-            if(mapReady) {
+            if (mapReady) {
                 updateMap()
             }
         })
     }
 
     private fun updateMap() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(37.892860, -122.078400)))
+        cameraLocation()
         trees.value?.forEach { tree ->
             val marker = LatLng(tree.lat, tree.lng)
             mMap.addMarker(
@@ -122,6 +117,7 @@ class MapFragment : Fragment() {
                     .addOnSuccessListener { location: Location? ->
                         if (location != null) {
                             currentLocation = LatLng(location.latitude, location.longitude)
+
                         }
                         // Got last known location. In some rare situations this can be null.
                     }

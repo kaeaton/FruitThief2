@@ -31,21 +31,27 @@ class MarkerViewModel(
         // temporarily seeding the database
         PopulateFruitTable(database)
         PopulateTreeTable(database)
+        PopulateFruitTable(database)
 
         initializeCurrentFruitTrees()
     }
 
     private fun initializeCurrentFruitTrees() {
         viewModelScope.launch {
-            allTrees = getCurrentFruitTreesFromDatabase()
+            allTrees = getAllFruitTreesFromDatabase()
         }
     }
 
-
+    private suspend fun getAllFruitTreesFromDatabase(): LiveData<List<Tree>> {
+        return liveData {
+            var trees = database.getTreeList()
+            emit(trees)
+        }
+    }
 
     private suspend fun getCurrentFruitTreesFromDatabase(): LiveData<List<Tree>> {
         return liveData {
-            var trees = database.getTreeList()
+            var trees = database.filterByFruit(selectedFruit)
             emit(trees)
         }
     }
