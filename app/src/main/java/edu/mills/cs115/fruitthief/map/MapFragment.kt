@@ -73,6 +73,7 @@ class MapFragment : Fragment() {
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
             mapReady = true
+            moveCamera()
         }
 
         binding.fab.setOnClickListener { view ->
@@ -113,7 +114,7 @@ class MapFragment : Fragment() {
     }
 
     private fun updateMap() {
-//        cameraLocation()
+        cameraLocation()
         trees.value?.forEach { tree ->
             val marker = LatLng(tree.lat, tree.lng)
             mMap.addMarker(
@@ -131,7 +132,11 @@ class MapFragment : Fragment() {
         return "Unknown Type"
     }
 
-    private fun currentLocation() {
+    private fun moveCamera() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+    }
+
+    private fun cameraLocation() {
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -140,8 +145,10 @@ class MapFragment : Fragment() {
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         if (location != null) {
-                            currentLocation = LatLng(location.latitude, location.longitude)
-
+                            locationCoordinates = LatLng(location.latitude, location.longitude)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                        } else {
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
                         }
                         // Got last known location. In some rare situations this can be null.
                     }
