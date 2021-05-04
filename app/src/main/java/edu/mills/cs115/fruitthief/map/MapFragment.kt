@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.mills.cs115.fruitthief.R
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
@@ -49,10 +50,15 @@ class MapFragment : Fragment() {
         // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val mapFragment =
-            childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
+            childFragmentManager.findFragmentById(R.id.frag_map) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
             mapReady = true
+        }
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
         }
 
         return rootView

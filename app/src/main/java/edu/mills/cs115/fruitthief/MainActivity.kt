@@ -32,12 +32,6 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
             }
         }
 
-
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
-        }
-
         setUpNavigation()
 
 //        val mapFragment = SupportMapFragment.newInstance()
@@ -65,13 +59,13 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-            if (destination.id != R.id.mapFragment) {
-                findViewById<FloatingActionButton>(R.id.fab).hide()
-            } else {
-                findViewById<FloatingActionButton>(R.id.fab).show()
-            }
-        }
+//        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
+//            if (destination.id != R.id.mapFragment) {
+//                findViewById<FloatingActionButton>(R.id.fab).hide()
+//            } else {
+//                findViewById<FloatingActionButton>(R.id.fab).show()
+//            }
+//        }
     }
 
 //    override fun onMapReady(googleMap: GoogleMap) {
