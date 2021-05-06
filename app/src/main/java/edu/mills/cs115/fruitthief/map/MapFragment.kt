@@ -81,8 +81,6 @@ class MapFragment : Fragment() {
 
         binding.fab.setOnClickListener { view ->
 
-//            currentLocation()
-//            mapViewModel.onFabClicked()
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -96,8 +94,6 @@ class MapFragment : Fragment() {
                                 Timber.i("Current latitude: " + currentLocation.latitude.toString())
                                 Timber.i("Current longitude: " + currentLocation.longitude.toString())
 
-
-//                                mapViewModel.setLocation(currentLocation)
                                 mapViewModel.onFabClicked()
                             }
                             // Got last known location. In some rare situations this can be null.
@@ -160,7 +156,6 @@ class MapFragment : Fragment() {
                     }
             }
         }
-//        return locationCoordinates
     }
 
 }
