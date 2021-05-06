@@ -76,6 +76,7 @@ class AddTreeFragment : Fragment() {
             }
         }
 
+        viewModel.setLocation(requireArguments().getDouble("lat"), requireArguments().getDouble("long"))
 
         binding.addTreeButton.setOnClickListener{
             viewModel.onButtonClicked(dataSource)

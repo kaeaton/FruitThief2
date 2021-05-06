@@ -49,7 +49,7 @@ class AddTreeViewModel : ViewModel() {
         _navigateToAddTree.value =false
     }
 
-    fun setLocation(location: LatLng) {
-        loc = location
+    fun setLocation(lat: Double, lng: Double) {
+        loc = LatLng(lat, lng)
     }
 }

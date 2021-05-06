@@ -53,23 +53,9 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         runBlocking {
             // clear for testing
             dataSource.clearFruitTable()
-//            dataSource.clearTrees()
+            dataSource.clearTrees()
             PopulateFruitTable(dataSource)
             PopulateTreeTable(dataSource)
-        }
-
-        // GPS Permission
-        if (ContextCompat.checkSelfPermission(this@MainActivity,
-                Manifest.permission.ACCESS_FINE_LOCATION) !==
-            PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            } else {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            }
         }
 
         // GPS Permission
