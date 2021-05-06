@@ -26,5 +26,11 @@
         <action
             android:id="@+id/action_addTreeFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <argument
+            android:name="latitude"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="longitude"
+            android:defaultValue="0.0" />
     </fragment>
 </navigation>

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         runBlocking {
             // clear for testing
             dataSource.clearFruitTable()
-//            dataSource.clearTrees()
+            dataSource.clearTrees()
             PopulateFruitTable(dataSource)
             PopulateTreeTable(dataSource)
         }

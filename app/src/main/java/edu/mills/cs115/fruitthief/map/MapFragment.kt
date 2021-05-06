@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -62,8 +63,10 @@ class MapFragment : Fragment() {
         mapViewModel.navigateToAddTree.observe(viewLifecycleOwner,
             Observer<Boolean> { navigate ->
                 if (navigate) {
-                    val navController = findNavController()
-                    navController.navigate(R.id.action_mapFragment_to_addTreeFragment)
+                    val bundle = bundleOf(
+                        Pair("lat", currentLocation.latitude),
+                        Pair("long", currentLocation.longitude))
+                    findNavController().navigate(R.id.action_mapFragment_to_addTreeFragment, bundle)
                     mapViewModel.onNavigatedToFilter()
                 }
             })
@@ -91,7 +94,6 @@ class MapFragment : Fragment() {
                                 Timber.i("Current latitude: " + currentLocation.latitude.toString())
                                 Timber.i("Current longitude: " + currentLocation.longitude.toString())
 
-                                mapViewModel.setLocation(currentLocation)
                                 mapViewModel.onFabClicked()
                             }
                             // Got last known location. In some rare situations this can be null.
@@ -154,7 +156,6 @@ class MapFragment : Fragment() {
                     }
             }
         }
-//        return locationCoordinates
     }
 
 }
