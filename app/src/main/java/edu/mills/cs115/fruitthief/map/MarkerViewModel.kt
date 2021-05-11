@@ -11,17 +11,11 @@ class MarkerViewModel(
 
     lateinit var allFruit: Array<Fruit>
     lateinit var allTrees: LiveData<List<Tree>>
-//    = liveData {
-//         val data = database.getTreeList()
-//        emit(data)
-//    }
 
     val specificFruitTrees: LiveData<List<Tree>> = liveData {
         val data = database.filterByFruit(selectedFruit)
         emit(data)
     }
-
-//    var currentFruitTrees = MutableLiveData<List<Tree?>>()
 
     init {
         initializeCurrentFruitTrees()
