@@ -38,13 +38,9 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         val application = requireNotNull(this).application
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
 
-        // clear tables for testing
         runBlocking {
-            // clear for testing
-            dataSource.clearFruitTable()
-            dataSource.clearTrees()
             PopulateFruitTable(dataSource)
-            PopulateTreeTable(dataSource)
+            //PopulateTreeTable(dataSource)
         }
 
         // GPS Permission
