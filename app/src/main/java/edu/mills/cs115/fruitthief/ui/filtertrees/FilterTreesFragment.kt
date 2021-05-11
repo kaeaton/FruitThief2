@@ -23,7 +23,7 @@ class FilterTreesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil
             .inflate<FragmentFilterTreesBinding>(
                 inflater, R.layout.fragment_filter_trees, container, false)

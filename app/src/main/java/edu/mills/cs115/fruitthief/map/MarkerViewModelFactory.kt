@@ -1,6 +1,5 @@
 package edu.mills.cs115.fruitthief.map
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO

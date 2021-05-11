@@ -3,7 +3,6 @@ package edu.mills.cs115.fruitthief.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 /**
  * Data table of fruit and their seasons. Prepopulated when the user first opens the app.

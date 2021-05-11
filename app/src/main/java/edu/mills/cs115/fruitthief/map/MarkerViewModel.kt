@@ -1,6 +1,5 @@
 package edu.mills.cs115.fruitthief.map
 
-import android.app.Application
 import androidx.lifecycle.*
 import edu.mills.cs115.fruitthief.database.*
 import kotlinx.coroutines.launch
@@ -8,7 +7,7 @@ import kotlinx.coroutines.launch
 class MarkerViewModel(
     val database: FruitTreeDAO) : ViewModel() {
 
-    private var selectedFruit = "Lemon"
+    var selectedFruit = "Lemon"
 
     lateinit var allFruit: Array<Fruit>
     lateinit var allTrees: LiveData<List<Tree>>

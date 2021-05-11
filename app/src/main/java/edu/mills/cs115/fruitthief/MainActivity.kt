@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.navigation.findNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,18 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.ui.*
 import edu.mills.cs115.fruitthief.databinding.ActivityMainBinding
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.PopulateFruitTable
 import edu.mills.cs115.fruitthief.database.PopulateTreeTable
@@ -60,7 +49,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
         // GPS Permission
         if (ContextCompat.checkSelfPermission(this@MainActivity,
-                Manifest.permission.ACCESS_FINE_LOCATION) !==
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
