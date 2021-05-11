@@ -48,7 +48,7 @@ class MapFragment : Fragment() {
     ): View? {
         val application = requireNotNull(this.activity).application
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
-        viewModelFactory = MarkerViewModelFactory(dataSource, application)
+        viewModelFactory = MarkerViewModelFactory(dataSource)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
         mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
@@ -79,7 +79,7 @@ class MapFragment : Fragment() {
             moveCamera()
         }
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
 
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(

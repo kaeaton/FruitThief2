@@ -6,10 +6,9 @@ import edu.mills.cs115.fruitthief.database.*
 import kotlinx.coroutines.launch
 
 class MarkerViewModel(
-    val database: FruitTreeDAO,
-    application: Application) : ViewModel() {
+    val database: FruitTreeDAO) : ViewModel() {
 
-    var selectedFruit = "Lemon"
+    private var selectedFruit = "Lemon"
 
     lateinit var allFruit: Array<Fruit>
     lateinit var allTrees: LiveData<List<Tree>>
@@ -26,12 +25,6 @@ class MarkerViewModel(
 //    var currentFruitTrees = MutableLiveData<List<Tree?>>()
 
     init {
-        // temporarily seeding the database
-      
-//        PopulateFruitTable(database)
-//        PopulateTreeTable(database)
-//        PopulateFruitTable(database)
-
         initializeCurrentFruitTrees()
         initializeAllFruit()
     }
@@ -50,14 +43,14 @@ class MarkerViewModel(
 
     private suspend fun getAllFruitTreesFromDatabase(): LiveData<List<Tree>> {
         return liveData {
-            var trees = database.getTreeList()
+            val trees = database.getTreeList()
             emit(trees)
         }
     }
 
     private suspend fun getCurrentFruitTreesFromDatabase(): LiveData<List<Tree>> {
         return liveData {
-            var trees = database.filterByFruit(selectedFruit)
+            val trees = database.filterByFruit(selectedFruit)
             emit(trees)
         }
     }
