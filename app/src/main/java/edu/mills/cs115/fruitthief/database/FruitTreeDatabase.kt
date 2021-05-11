@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase
 abstract class FruitTreeDatabase : RoomDatabase() {
     abstract val fruitTreeDAO: FruitTreeDAO
 
+    // method to generate fruit and trees
+
     companion object {
         @Volatile
         private var INSTANCE: FruitTreeDatabase? = null
@@ -42,6 +44,9 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                         // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                         .fallbackToDestructiveMigration()
                         .build()
+
+                    // call method to add fruit and trees to database here
+                    
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
                 }
