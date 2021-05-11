@@ -17,7 +17,6 @@ import edu.mills.cs115.fruitthief.databinding.FragmentAddTreeBinding
 import kotlinx.coroutines.runBlocking
 
 
-
 class AddTreeFragment : Fragment() {
     private lateinit var viewModel: AddTreeViewModel
 
@@ -29,7 +28,8 @@ class AddTreeFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil
             .inflate<FragmentAddTreeBinding>(
-                inflater, R.layout.fragment_add_tree, container, false)
+                inflater, R.layout.fragment_add_tree, container, false
+            )
 
         viewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
 
@@ -48,7 +48,7 @@ class AddTreeFragment : Fragment() {
             }
 
         runBlocking {
-            binding.addTreeSpinner.setSelection(dataSource.getFruitNamesList().size-1)
+            binding.addTreeSpinner.setSelection(dataSource.getFruitNamesList().size - 1)
         }
 
         binding.addTreeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -57,9 +57,7 @@ class AddTreeFragment : Fragment() {
                 position: Int, id: Long
             ) {
                 val item = adapterView.getItemAtPosition(position)
-                if (item != null) {
-                    viewModel.onItemSelected(item.toString())
-                } else { viewModel.onItemSelected("Unknown")}
+                viewModel.onItemSelected(item?.toString() ?: "Unknown")
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
@@ -67,9 +65,12 @@ class AddTreeFragment : Fragment() {
             }
         }
 
-        viewModel.setLocation(requireArguments().getDouble("lat"), requireArguments().getDouble("long"))
+        viewModel.setLocation(
+            requireArguments().getDouble("lat"),
+            requireArguments().getDouble("long")
+        )
 
-        binding.addTreeButton.setOnClickListener{
+        binding.addTreeButton.setOnClickListener {
             viewModel.onButtonClicked(dataSource)
             val navController = findNavController()
             navController.navigate(R.id.action_addTreeFragment_to_mapFragment)

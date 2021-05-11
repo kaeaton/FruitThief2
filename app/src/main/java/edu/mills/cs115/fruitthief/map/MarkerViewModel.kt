@@ -5,7 +5,8 @@ import edu.mills.cs115.fruitthief.database.*
 import kotlinx.coroutines.launch
 
 class MarkerViewModel(
-    val database: FruitTreeDAO) : ViewModel() {
+    val database: FruitTreeDAO
+) : ViewModel() {
 
     var selectedFruit = "Lemon"
 

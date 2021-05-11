@@ -17,15 +17,22 @@ class AddTreeViewModel : ViewModel() {
         get() = _navigateToAddTree
 
 
-    fun onItemSelected(string: String){
+    fun onItemSelected(string: String) {
         fruit = string
     }
 
-    fun onButtonClicked(dataSource: FruitTreeDAO){
+    fun onButtonClicked(dataSource: FruitTreeDAO) {
 
         runBlocking {
             dataSource
-                .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
+                .insert(
+                    Tree(
+                        0,
+                        dataSource.getFruitByName(fruit).fruitId,
+                        loc.latitude,
+                        loc.longitude
+                    )
+                )
             Timber.i("tree table: %s", dataSource.getTreeList())
         }
         Timber.i("TreeViewModel current location: %s", loc.toString())
@@ -38,7 +45,7 @@ class AddTreeViewModel : ViewModel() {
     }
 
     fun onNavigatedToFilter() {
-        _navigateToAddTree.value =false
+        _navigateToAddTree.value = false
     }
 
     fun setLocation(lat: Double, lng: Double) {
