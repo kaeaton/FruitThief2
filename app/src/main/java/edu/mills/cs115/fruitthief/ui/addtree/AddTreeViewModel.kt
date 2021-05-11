@@ -11,26 +11,28 @@ import timber.log.Timber
 
 class AddTreeViewModel : ViewModel() {
     var fruit = "Unknown"
-    private var loc = LatLng(0.0, 0.0)
+    private lateinit var loc: LatLng
     private val _navigateToAddTree = MutableLiveData<Boolean>()
     val navigateToAddTree: LiveData<Boolean>
         get() = _navigateToAddTree
 
-
-    fun onItemSelected(string: String){
+    fun onItemSelected(string: String) {
         fruit = string
     }
 
-    fun onButtonClicked(dataSource: FruitTreeDAO){
+    fun onButtonClicked(dataSource: FruitTreeDAO) {
 
         runBlocking {
             dataSource
-                .insert(Tree(0, dataSource.getFruitByName(fruit).fruitId, loc.latitude, loc.longitude))
-            Timber.i("tree table: %s", dataSource.getTreeList())
+                .insert(
+                    Tree(
+                        0,
+                        dataSource.getFruitByName(fruit).fruitId,
+                        loc.latitude,
+                        loc.longitude
+                    )
+                )
         }
-        Timber.i("TreeViewModel current location: %s", loc.toString())
-        Timber.i("TreeViewModel current latitude: %s", loc.latitude.toString())
-        Timber.i("TreeViewModel current longitude: %s", loc.longitude.toString())
     }
 
     fun onFabClicked() {
@@ -38,7 +40,7 @@ class AddTreeViewModel : ViewModel() {
     }
 
     fun onNavigatedToFilter() {
-        _navigateToAddTree.value =false
+        _navigateToAddTree.value = false
     }
 
     fun setLocation(lat: Double, lng: Double) {

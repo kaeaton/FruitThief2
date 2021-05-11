@@ -24,7 +24,6 @@ import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
 import edu.mills.cs115.fruitthief.ui.addtree.AddTreeViewModel
-import timber.log.Timber
 
 class MapFragment : Fragment() {
 
@@ -61,7 +60,8 @@ class MapFragment : Fragment() {
                 if (navigate) {
                     val bundle = bundleOf(
                         Pair("lat", currentLocation.latitude),
-                        Pair("long", currentLocation.longitude))
+                        Pair("long", currentLocation.longitude)
+                    )
                     findNavController().navigate(R.id.action_mapFragment_to_addTreeFragment, bundle)
                     mapViewModel.onNavigatedToFilter()
                 }
@@ -77,25 +77,24 @@ class MapFragment : Fragment() {
 
         binding.fab.setOnClickListener {
 
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) -> {
-                    fusedLocationClient.lastLocation
-                        .addOnSuccessListener { location: Location? ->
-                            if (location != null) {
-                                currentLocation = LatLng(location.latitude, location.longitude)
-                                Timber.i("Current location: %s", currentLocation.toString())
-                                Timber.i("Current latitude: %s", currentLocation.latitude.toString())
-                                Timber.i("Current longitude: %s", currentLocation.longitude.toString())
-
-                                mapViewModel.onFabClicked()
-                            }
-                            // Got last known location. In some rare situations this can be null.
-                        }
-                }
-            }
+            currentLocation = LatLng(38.0, -122.1)
+            mapViewModel.onFabClicked()
+//            when (PackageManager.PERMISSION_GRANTED) {
+//                ContextCompat.checkSelfPermission(
+//                    requireContext(),
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//                ) -> {
+//                    fusedLocationClient.lastLocation
+//                        .addOnSuccessListener { location: Location? ->
+//                            if (location != null) {
+//                                currentLocation = LatLng(location.latitude, location.longitude)
+//
+//                                mapViewModel.onFabClicked()
+//                            }
+//                            // Got last known location. In some rare situations this can be null.
+//                        }
+//                }
+//            }
         }
 
         return binding.root
@@ -144,9 +143,19 @@ class MapFragment : Fragment() {
                     .addOnSuccessListener { location: Location? ->
                         if (location != null) {
                             locationCoordinates = LatLng(location.latitude, location.longitude)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                            mMap.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    locationCoordinates,
+                                    11f
+                                )
+                            )
                         } else {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, 11f))
+                            mMap.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    locationCoordinates,
+                                    11f
+                                )
+                            )
                         }
                         // Got last known location. In some rare situations this can be null.
                     }

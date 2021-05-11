@@ -6,7 +6,7 @@ import timber.log.Timber
 class PopulateFruitTable(fruitTreeDao: FruitTreeDAO) {
 
     init {
-        runBlocking{
+        runBlocking {
             if (fruitTreeDao.getFruitList().isEmpty()) {
                 Timber.i("Populating table")
                 fruitTreeDao.insert(Fruit(0, "Apple", "HIJK"))
