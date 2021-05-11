@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  *
  */
 @Entity(tableName = "fruit_info_table")
-data class Fruit (
+data class Fruit(
     @PrimaryKey(autoGenerate = true)
     var fruitId: Int = 0,
 

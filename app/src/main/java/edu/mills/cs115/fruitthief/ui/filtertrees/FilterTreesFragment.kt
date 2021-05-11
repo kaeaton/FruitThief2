@@ -26,7 +26,8 @@ class FilterTreesFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil
             .inflate<FragmentFilterTreesBinding>(
-                inflater, R.layout.fragment_filter_trees, container, false)
+                inflater, R.layout.fragment_filter_trees, container, false
+            )
 
         viewModel = ViewModelProvider(this).get(FilterTreesViewModel::class.java)
 
@@ -57,7 +58,9 @@ class FilterTreesFragment : Fragment() {
                 val item = adapterView.getItemAtPosition(position)
                 if (item != null) {
                     viewModel.onItemSelected(item.toString())
-                } else { viewModel.onItemSelected("Any")}
+                } else {
+                    viewModel.onItemSelected("Any")
+                }
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
@@ -65,7 +68,7 @@ class FilterTreesFragment : Fragment() {
             }
         }
 
-        binding.filterButton.setOnClickListener{
+        binding.filterButton.setOnClickListener {
             viewModel.onButtonClicked(dataSource)
         }
 
