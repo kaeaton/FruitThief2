@@ -77,7 +77,7 @@ class MapFragment : Fragment() {
 
         binding.fab.setOnClickListener {
 
-            currentLocation = LatLng(38.1, -122.1)
+            currentLocation = LatLng(38.0, -122.1)
             mapViewModel.onFabClicked()
 //            when (PackageManager.PERMISSION_GRANTED) {
 //                ContextCompat.checkSelfPermission(
