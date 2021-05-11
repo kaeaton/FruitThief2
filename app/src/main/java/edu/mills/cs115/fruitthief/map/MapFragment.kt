@@ -53,7 +53,6 @@ class MapFragment : Fragment() {
             .get(MarkerViewModel::class.java)
         mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
-        currentLocation = LatLng(0.0, 0.0)
 
         treesToDisplay = viewModel.allTrees
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)

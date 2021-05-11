@@ -30,6 +30,7 @@ class FruitTreeDatabaseTest {
             .build()
         fruitTreeDao = db.fruitTreeDAO
     }
+
     @After
     @Throws(IOException::class)
     fun closeDb() {
@@ -38,9 +39,9 @@ class FruitTreeDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertFruit(){
-        runBlocking{
-            PopulateFruitTable(fruitTreeDao);
+    fun insertFruit() {
+        runBlocking {
+            PopulateFruitTable(fruitTreeDao)
             assertEquals("Apple", fruitTreeDao.getFruitByName("Apple").fruitName)
             PopulateFruitTable(fruitTreeDao)
             assertEquals("KLABC", fruitTreeDao.getFruitByName("Pomelo").fruitSeason)
