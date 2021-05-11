@@ -1,6 +1,5 @@
 package edu.mills.cs115.fruitthief.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 /**

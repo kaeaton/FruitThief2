@@ -1,7 +1,6 @@
 package edu.mills.cs115.fruitthief.map
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.*
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,7 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import edu.mills.cs115.fruitthief.R
-import edu.mills.cs115.fruitthief.database.Fruit
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
 import edu.mills.cs115.fruitthief.database.Tree
 import edu.mills.cs115.fruitthief.databinding.FragmentMapBinding
@@ -45,10 +42,10 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val application = requireNotNull(this.activity).application
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
-        viewModelFactory = MarkerViewModelFactory(dataSource, application)
+        viewModelFactory = MarkerViewModelFactory(dataSource)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MarkerViewModel::class.java)
         mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
@@ -60,7 +57,7 @@ class MapFragment : Fragment() {
         val binding = FragmentMapBinding.inflate(inflater)
 
         mapViewModel.navigateToAddTree.observe(viewLifecycleOwner,
-            Observer<Boolean> { navigate ->
+            Observer { navigate ->
                 if (navigate) {
                     val bundle = bundleOf(
                         Pair("lat", currentLocation.latitude),
@@ -78,7 +75,7 @@ class MapFragment : Fragment() {
             moveCamera()
         }
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
 
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
@@ -89,9 +86,9 @@ class MapFragment : Fragment() {
                         .addOnSuccessListener { location: Location? ->
                             if (location != null) {
                                 currentLocation = LatLng(location.latitude, location.longitude)
-                                Timber.i("Current location: " + currentLocation.toString())
-                                Timber.i("Current latitude: " + currentLocation.latitude.toString())
-                                Timber.i("Current longitude: " + currentLocation.longitude.toString())
+                                Timber.i("Current location: %s", currentLocation.toString())
+                                Timber.i("Current latitude: %s", currentLocation.latitude.toString())
+                                Timber.i("Current longitude: %s", currentLocation.longitude.toString())
 
                                 mapViewModel.onFabClicked()
                             }
@@ -126,7 +123,7 @@ class MapFragment : Fragment() {
 
     private fun getFruitName(fruitID: Int): String {
         viewModel.allFruit.forEach { fruit ->
-            if (fruit.fruitId.equals(fruitID)) {
+            if (fruit.fruitId == fruitID) {
                 return fruit.fruitName
             }
         }
