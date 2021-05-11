@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
         runBlocking {
             PopulateFruitTable(dataSource)
-            //PopulateTreeTable(dataSource)
+            PopulateTreeTable(dataSource)
         }
 
         // GPS Permission
