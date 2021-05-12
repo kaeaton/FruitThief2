@@ -6,12 +6,13 @@ import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import java.lang.IllegalArgumentException
 
 class MarkerViewModelFactory(
-    private val dataSource: FruitTreeDAO) : ViewModelProvider.Factory {
+    private val dataSource: FruitTreeDAO
+) : ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MarkerViewModel::class.java)) {
-            return MarkerViewModel(dataSource)as T
+            return MarkerViewModel(dataSource) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

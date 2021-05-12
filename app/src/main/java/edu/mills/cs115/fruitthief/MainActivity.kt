@@ -44,13 +44,21 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         }
 
         // GPS Permission
-        if (ContextCompat.checkSelfPermission(this@MainActivity,
-                Manifest.permission.ACCESS_FINE_LOCATION) !=
-            PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        if (ContextCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this@MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
+                )
             } else {
                 ActivityCompat.requestPermissions(
                     this@MainActivity,
@@ -87,17 +95,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     private fun setUpNavigation() {
         NavigationUI.setupWithNavController(binding.navView, navController)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
-
-//        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-//            if (destination.id != R.id.mapFragment) {
-//                findViewById<FloatingActionButton>(R.id.fab).hide()
-//            } else {
-//                findViewById<FloatingActionButton>(R.id.fab).show()
-//            }
-//        }
     }
 }
