@@ -79,25 +79,22 @@ class MapFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            //temporary fix for emulator not seeing location
-            currentLocation = LatLng(37.9, -122.1)
-            mapViewModel.onFabClicked()
-//            when (PackageManager.PERMISSION_GRANTED) {
-//                ContextCompat.checkSelfPermission(
-//                    requireContext(),
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                ) -> {
-//                    fusedLocationClient.lastLocation
-//                        .addOnSuccessListener { location: Location? ->
-//                            if (location != null) {
-//                                currentLocation = LatLng(location.latitude, location.longitude)
-//
-//                                mapViewModel.onFabClicked()
-//                            }
-//                            // Got last known location. In some rare situations this can be null.
-//                        }
-//                }
-//            }
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) -> {
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location: Location? ->
+                            if (location != null) {
+                                currentLocation = LatLng(location.latitude, location.longitude)
+
+                                mapViewModel.onFabClicked()
+                            }
+                            // Got last known location. In some rare situations this can be null.
+                        }
+                }
+            }
         }
 
         return binding.root
