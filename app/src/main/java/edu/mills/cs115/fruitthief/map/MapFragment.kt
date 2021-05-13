@@ -37,6 +37,9 @@ class MapFragment : Fragment() {
     private lateinit var currentLocation: LatLng
     private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val latitudeString = "lat"
+    private val longitudeString = "long"
+    private val unknownTypeString = "Unknown Type"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,8 +62,8 @@ class MapFragment : Fragment() {
             Observer { navigate ->
                 if (navigate) {
                     val bundle = bundleOf(
-                        Pair("lat", currentLocation.latitude),
-                        Pair("long", currentLocation.longitude)
+                        Pair(latitudeString, currentLocation.latitude),
+                        Pair(longitudeString, currentLocation.longitude)
                     )
                     findNavController().navigate(R.id.action_mapFragment_to_addTreeFragment, bundle)
                     mapViewModel.onNavigatedToFilter()
@@ -76,25 +79,22 @@ class MapFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) -> {
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location: Location? ->
+                            if (location != null) {
+                                currentLocation = LatLng(location.latitude, location.longitude)
 
-            currentLocation = LatLng(38.0, -122.1)
-            mapViewModel.onFabClicked()
-//            when (PackageManager.PERMISSION_GRANTED) {
-//                ContextCompat.checkSelfPermission(
-//                    requireContext(),
-//                    Manifest.permission.ACCESS_FINE_LOCATION
-//                ) -> {
-//                    fusedLocationClient.lastLocation
-//                        .addOnSuccessListener { location: Location? ->
-//                            if (location != null) {
-//                                currentLocation = LatLng(location.latitude, location.longitude)
-//
-//                                mapViewModel.onFabClicked()
-//                            }
-//                            // Got last known location. In some rare situations this can be null.
-//                        }
-//                }
-//            }
+                                mapViewModel.onFabClicked()
+                            }
+                            // Got last known location. In some rare situations this can be null.
+                        }
+                }
+            }
         }
 
         return binding.root
@@ -126,7 +126,7 @@ class MapFragment : Fragment() {
                 return fruit.fruitName
             }
         }
-        return "Unknown Type"
+        return unknownTypeString
     }
 
     private fun moveCamera() {

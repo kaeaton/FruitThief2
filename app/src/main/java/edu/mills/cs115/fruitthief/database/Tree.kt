@@ -5,9 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * A specific fruit tree, including its location and fruit type.
+ * Data table of trees, their location and fruit type.
  *
- * @param treeId a unique ID, auto-generated if unset
  * @param fruit key of the tree's fruit type in fruit_info_table
  * @param lat latitude of Tree
  * @param lng longitude of Tree
@@ -19,11 +18,11 @@ data class Tree(
 
     //points to fruit type in fruit_info_table
     @ColumnInfo(name = "fruit_type")
-    val fruit: Int,
+    var fruit: Int,
 
     @ColumnInfo(name = "tree_latitude")
-    val lat: Double,
+    var lat: Double,
 
     @ColumnInfo(name = "tree_longitude")
-    val lng: Double
+    var lng: Double
 )
