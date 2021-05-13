@@ -13,6 +13,7 @@ class MarkerViewModel(
     lateinit var allFruit: Array<Fruit>
     lateinit var allTrees: LiveData<List<Tree>>
 
+    // for filter
     val specificFruitTrees: LiveData<List<Tree>> = liveData {
         val data = database.filterByFruit(selectedFruit)
         emit(data)
