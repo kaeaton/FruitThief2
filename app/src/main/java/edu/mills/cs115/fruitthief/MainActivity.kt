@@ -18,7 +18,6 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.*
 import edu.mills.cs115.fruitthief.databinding.ActivityMainBinding
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
-import edu.mills.cs115.fruitthief.database.PopulateFruitTable
 import edu.mills.cs115.fruitthief.database.PopulateTreeTable
 import edu.mills.cs115.fruitthief.map.MapFragment
 import kotlinx.coroutines.runBlocking
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
 
         runBlocking {
-            PopulateFruitTable(dataSource)
+            dataSource.populateFruitTable()
             PopulateTreeTable(dataSource)
         }
 
@@ -95,7 +94,9 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
     private fun setUpNavigation() {
         NavigationUI.setupWithNavController(binding.navView, navController)
-        setSupportActionBar(binding.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+
+        setSupportActionBar(toolbar)
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
     }
 }

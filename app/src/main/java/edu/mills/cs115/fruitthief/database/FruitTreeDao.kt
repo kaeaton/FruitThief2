@@ -3,107 +3,100 @@ package edu.mills.cs115.fruitthief.database
 import androidx.room.*
 
 /**
- * DAO for accessing information about trees and fruit.
+ * DAO interface for interacting with FruitTreeDatabase.
  *
+ * @see [FruitTreeDatabase]
  * @see [Tree]
  * @see [Fruit]
  */
 @Dao
 interface FruitTreeDAO {
     /**
-     * Inserts a tree into the database.
      *
-     * @param tree tree to be added
+     * @param tree New tree to be added
+     *
      */
     @Insert
     suspend fun insert(tree: Tree)
 
     /**
-     * Inserts a fruit into the database.
      *
-     * @param fruit fruit to be added
+     * fruit_info_table is prepopulated, so insert(fruit) should only be used on app's first run.
+     * @param fruit Fruit to be added
      */
     @Insert
     suspend fun insert(fruit: Fruit)
 
     /**
-     * Updates the tree information in the database.
      *
-     * @param tree tree with updated information
+     * @param tree Tree with updated information
      */
     @Update
     suspend fun update(tree: Tree)
 
     /**
-     * Removes a tree from the database.
      *
-     * @param tree tree to be deleted
+     * @param tree Tree to be deleted
      */
     @Delete
     suspend fun deleteTree(tree: Tree)
 
-    /**
-     * Clears all trees from the database.
-     */
     @Query("DELETE FROM tree_info_table")
     suspend fun clearTrees()
 
     /**
-     * Clears all fruit from the database.
+     *
+     * Only for test purposes, should never actually be used.
      */
     @Query("DELETE FROM fruit_info_table")
     suspend fun clearFruitTable()
 
     /**
-     * Get all fruits from the database.
      *
-     * @return all fruits
+     * @return Array of all Fruit
      */
     @Query("SELECT * FROM fruit_info_table")
     suspend fun getFruitList(): Array<Fruit>
 
     /**
-     * Get all trees from the database.
      *
-     * @return all trees
+     * @return Array of all Trees
      */
     @Query("SELECT * FROM tree_info_table")
     suspend fun getTreeList(): List<Tree>
 
     /**
-     * Get information about the named fruit from the database.
      *
-     * @param fruitName name of the fruit
-     * @return matching fruit information
+     * @param fruitName String of fruit name
+     * @return Fruit that matches given string
      */
     @Query("SELECT * FROM fruit_info_table WHERE fruit_name = :fruitName")
     suspend fun getFruitByName(fruitName: String): Fruit
 
     /**
-     * Get trees filtered by fruit type from the database.
      *
-     * @param fruit name of the fruit
-     * @return trees of the specified fruit type
+     * @param fruit String specifying fruit type
+     * @return Array of Trees with fruit matching given type
      */
     @Query("SELECT tree.* FROM tree_info_table tree INNER JOIN fruit_info_table ON fruit_type = fruitId WHERE fruit_name = :fruit")
     suspend fun filterByFruit(fruit: String): List<Tree>
 
     /**
-     * Get the trees fruiting in a given month from the database.
-     * The months are represented by a single letter, beginning with A representing January,
-     * and ending with L representing December.
      *
-     * @param month letter representing the month
-     * @return all trees for the specified month
+     * @param month String of a single character representing the current month. A-L = Jan-Dec
+     * @return Array of all Trees whose fruit is currently in season
      */
     @Query("SELECT tree.* FROM tree_info_table tree INNER JOIN fruit_info_table ON fruit_type = fruitId WHERE fruit_season LIKE '%'+:month+'%'")
     suspend fun getInSeasonTrees(month: String): List<Tree>
 
     /**
-     * Get all fruit names from the database.
      *
-     * @return all fruit names
+     * @return Array of all fruit names
      */
     @Query("SELECT fruit_name FROM fruit_info_table")
     suspend fun getFruitNamesList(): Array<String>
+
+    fun populateFruitTable(){
+        PopulateFruitTable(this)
+    }
 }

@@ -39,11 +39,11 @@ class FruitTreeDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertFruit() {
+    fun getFruit() {
         runBlocking {
-            PopulateFruitTable(fruitTreeDao)
+            fruitTreeDao.populateFruitTable()
             assertEquals("Apple", fruitTreeDao.getFruitByName("Apple").fruitName)
-            PopulateFruitTable(fruitTreeDao)
+            fruitTreeDao.populateFruitTable()
             assertEquals("KLABC", fruitTreeDao.getFruitByName("Pomelo").fruitSeason)
         }
     }

@@ -19,6 +19,9 @@ import kotlinx.coroutines.runBlocking
 
 class AddTreeFragment : Fragment() {
     private lateinit var viewModel: AddTreeViewModel
+    private val latitudeString = "lat"
+    private val longitudeString = "long"
+    private val unknownString = "Unknown"
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -57,17 +60,17 @@ class AddTreeFragment : Fragment() {
                 position: Int, id: Long
             ) {
                 val item = adapterView.getItemAtPosition(position)
-                viewModel.onItemSelected(item?.toString() ?: "Unknown")
+                viewModel.onItemSelected(item?.toString() ?: unknownString)
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                viewModel.onItemSelected("Unknown")
+                viewModel.onItemSelected(unknownString)
             }
         }
 
         viewModel.setLocation(
-            requireArguments().getDouble("lat"),
-            requireArguments().getDouble("long")
+            requireArguments().getDouble(latitudeString),
+            requireArguments().getDouble(longitudeString)
         )
 
         binding.addTreeButton.setOnClickListener {
