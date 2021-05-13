@@ -5,7 +5,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import edu.mills.cs115.fruitthief.database.FruitTreeDAO
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
-import edu.mills.cs115.fruitthief.database.PopulateFruitTable
 import junit.framework.Assert.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

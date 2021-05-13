@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
 
         runBlocking {
-            dataSource.populateFruitTable()
             PopulateTreeTable(dataSource)
         }
 

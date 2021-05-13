@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.runBlocking
 
 @Database(entities = [Fruit::class, Tree::class], version = 1, exportSchema = false)
 abstract class FruitTreeDatabase : RoomDatabase() {
@@ -42,12 +43,27 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                         // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                         .fallbackToDestructiveMigration()
                         .build()
+                    runBlocking {
+                        populateFruitTable(instance)
+                    }
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
                 }
 
                 // Return instance; smart cast to be non-null.
                 return instance
+            }
+        }
+
+        suspend fun populateFruitTable(database: FruitTreeDatabase){
+            listOf("Apple" to "HIJK", "Apricot" to "FG", "Asian Pear" to "IJK",
+            "Avocado" to "FGH", "Blackberry Bush" to "GHI", "Fig" to "IJFG",
+            "Grapefruit" to "LABCD", "Lemon" to "ABCDEFGHIJKL", "Lime" to "KLABCDEFG",
+            "Loquat" to "EFG", "Mandarin Orange" to "KLAB", "Orange" to "LABCD",
+            "Peach" to "GH", "Pear" to "HI", "Persimmon" to "J", "Pineapple Guava" to "JK",
+            "Plum" to "FGHI", "Pluot" to "FGHI", "Pomegranate" to "JK", "Pomelo" to "KLAB",
+            "Tangerine" to "KLAB", "Unknown" to "ABCDEFGHIJKL").forEach {
+                database.fruitTreeDAO.insert(Fruit(fruitName = it.first, fruitSeason = it.second))
             }
         }
     }
