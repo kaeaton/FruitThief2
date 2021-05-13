@@ -15,3 +15,5 @@ class PopulateTreeTable(fruitTreeDao: FruitTreeDAO) {
         }
     }
 }
+
+// add method to Fruit Tree Database
