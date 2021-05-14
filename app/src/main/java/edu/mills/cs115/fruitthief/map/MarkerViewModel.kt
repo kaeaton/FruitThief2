@@ -53,5 +53,4 @@ class MarkerViewModel(
     private suspend fun getAllFruitFromDatabase(): Array<Fruit> {
         return database.getFruitList()
     }
-
 }

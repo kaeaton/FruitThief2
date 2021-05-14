@@ -81,6 +81,22 @@ class MapFragment : Fragment() {
             moveCamera()
         }
 
+        treesToDisplay.observe(viewLifecycleOwner,
+            Observer { trees ->
+                mapFragment.getMapAsync { googleMap ->
+                    mMap = googleMap
+                    mapReady = true
+                    cameraLocation()
+
+                    trees.forEach { tree ->
+                        val marker = LatLng(tree.lat, tree.lng)
+                        mMap.addMarker(
+                            MarkerOptions().position(marker).title(getFruitName(tree.fruit))
+                        )
+                    }
+                }
+            })
+
         binding.fab.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
