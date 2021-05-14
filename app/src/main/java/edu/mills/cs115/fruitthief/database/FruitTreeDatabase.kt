@@ -18,6 +18,7 @@ abstract class FruitTreeDatabase : RoomDatabase() {
         private var INSTANCE: FruitTreeDatabase? = null
 
         /**
+         * Create a prepopulated instance of the database.
          *
          * @param context app Context
          * @return app's instance of the database
