@@ -81,7 +81,7 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                 context.getString(R.string.pomegranate_text) to "JK",
                 context.getString(R.string.pomelo_text) to "KLAB",
                 context.getString(R.string.tangerine_text) to "KLAB",
-                context.getString(R.string.unknown_text) to "ABCDEFGHIJKL"
+                context.getString(R.string.unknown_type_text) to "ABCDEFGHIJKL"
             ).forEach {
                 database.fruitTreeDAO.insert(Fruit(fruitName = it.first, fruitSeason = it.second))
             }

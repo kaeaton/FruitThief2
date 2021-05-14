@@ -17,6 +17,7 @@ import kotlinx.coroutines.runBlocking
 
 class FilterTreesFragment : Fragment() {
     private lateinit var viewModel: FilterTreesViewModel
+    private val anyString = requireNotNull(this.activity).getString(R.string.any_text)
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -59,12 +60,12 @@ class FilterTreesFragment : Fragment() {
                 if (item != null) {
                     viewModel.onItemSelected(item.toString())
                 } else {
-                    viewModel.onItemSelected("Any")
+                    viewModel.onItemSelected(anyString)
                 }
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                viewModel.onItemSelected("Any")
+                viewModel.onItemSelected(anyString)
             }
         }
 

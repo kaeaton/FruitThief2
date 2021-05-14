@@ -15,6 +15,9 @@
     <string name="filter_text">Filter</string>
     <string name="add_tree_fab_description_text">Add Tree Button</string>
 
+    <string name="latitude_text">Latitude</string>
+    <string name="longitude_text">Longitude</string>
+
     <string name="apple_text">Apple</string>
     <string name="apricot_text">Apricot</string>
     <string name="asian_pear_text">Asian Pear</string>
@@ -37,5 +40,6 @@
     <string name="pomegranate_text">Pomegranate</string>
     <string name="pomelo_text">Pomelo</string>
     <string name="tangerine_text">Tangerine</string>
-    <string name="unknown_text">Unknown</string>
+    <string name="unknown_type_text">Unknown Type</string>
+    <string name="any_text">Any</string>
 </resources>
