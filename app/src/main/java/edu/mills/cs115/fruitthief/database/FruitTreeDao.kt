@@ -95,8 +95,4 @@ interface FruitTreeDAO {
      */
     @Query("SELECT fruit_name FROM fruit_info_table")
     suspend fun getFruitNamesList(): Array<String>
-
-    fun populateFruitTable(){
-        PopulateFruitTable(this)
-    }
 }

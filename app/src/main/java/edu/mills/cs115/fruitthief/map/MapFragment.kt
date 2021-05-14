@@ -37,9 +37,10 @@ class MapFragment : Fragment() {
     private lateinit var currentLocation: LatLng
     private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val latitudeString = "lat"
-    private val longitudeString = "long"
-    private val unknownTypeString = "Unknown Type"
+    private val latitudeString = requireNotNull(this.activity).getString(R.string.latitude_text)
+    private val longitudeString = requireNotNull(this.activity).getString(R.string.longitude_text)
+    private val unknownTypeString =
+        requireNotNull(this.activity).getString(R.string.unknown_type_text)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

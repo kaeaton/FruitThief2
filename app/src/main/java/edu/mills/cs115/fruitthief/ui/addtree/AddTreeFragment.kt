@@ -19,9 +19,9 @@ import kotlinx.coroutines.runBlocking
 
 class AddTreeFragment : Fragment() {
     private lateinit var viewModel: AddTreeViewModel
-    private val latitudeString = "lat"
-    private val longitudeString = "long"
-    private val unknownString = "Unknown"
+    private val latitudeString = requireNotNull(this.activity).getString(R.string.latitude_text)
+    private val longitudeString = requireNotNull(this.activity).getString(R.string.longitude_text)
+    private val unknownString = requireNotNull(this.activity).getString(R.string.unknown_type_text)
 
     @SuppressLint("ResourceType")
     override fun onCreateView(

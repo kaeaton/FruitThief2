@@ -18,9 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.*
 import edu.mills.cs115.fruitthief.databinding.ActivityMainBinding
 import edu.mills.cs115.fruitthief.database.FruitTreeDatabase
-import edu.mills.cs115.fruitthief.database.PopulateTreeTable
 import edu.mills.cs115.fruitthief.map.MapFragment
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
 
@@ -36,11 +34,6 @@ class MainActivity : AppCompatActivity() { //, OnMapReadyCallback {
         drawerLayout = binding.drawerLayout
         val application = requireNotNull(this).application
         val dataSource = FruitTreeDatabase.getInstance(application).fruitTreeDAO
-
-        runBlocking {
-            dataSource.populateFruitTable()
-            PopulateTreeTable(dataSource)
-        }
 
         // GPS Permission
         if (ContextCompat.checkSelfPermission(
