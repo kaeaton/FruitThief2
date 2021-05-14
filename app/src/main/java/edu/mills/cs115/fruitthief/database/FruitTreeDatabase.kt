@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import edu.mills.cs115.fruitthief.R
 import kotlinx.coroutines.runBlocking
 
 @Database(entities = [Fruit::class, Tree::class], version = 1, exportSchema = false)
@@ -44,7 +45,7 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                         .fallbackToDestructiveMigration()
                         .build()
                     runBlocking {
-                        populateFruitTable(instance)
+                        populateFruitTable(instance, context)
                         populateTreeTable(instance)
                     }
                     // Assign INSTANCE to the newly created database.
@@ -56,15 +57,31 @@ abstract class FruitTreeDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateFruitTable(database: FruitTreeDatabase) {
+        suspend fun populateFruitTable(database: FruitTreeDatabase, context: Context) {
             listOf(
-                "Apple" to "HIJK", "Apricot" to "FG", "Asian Pear" to "IJK",
-                "Avocado" to "FGH", "Blackberry Bush" to "GHI", "Fig" to "IJFG",
-                "Grapefruit" to "LABCD", "Lemon" to "ABCDEFGHIJKL", "Lime" to "KLABCDEFG",
-                "Loquat" to "EFG", "Mandarin Orange" to "KLAB", "Orange" to "LABCD",
-                "Peach" to "GH", "Pear" to "HI", "Persimmon" to "J", "Pineapple Guava" to "JK",
-                "Plum" to "FGHI", "Pluot" to "FGHI", "Pomegranate" to "JK", "Pomelo" to "KLAB",
-                "Tangerine" to "KLAB", "Unknown" to "ABCDEFGHIJKL"
+                context.getString(R.string.apple_text) to "HIJK",
+                context.getString(R.string.apricot_text) to "FG",
+                context.getString(R.string.asian_pear_text) to "IJK",
+                context.getString(R.string.avocado_text) to "FGH",
+                context.getString(R.string.blackberry_text) to "GHI",
+                context.getString(R.string.fig_text) to "IJFG",
+                context.getString(R.string.grapefruit_text) to "LABCD",
+                context.getString(R.string.lemon_text) to "ABCDEFGHIJKL",
+                context.getString(R.string.lime_text) to "KLABCDEFG",
+                context.getString(R.string.loquat_text) to "EFG",
+                context.getString(R.string.mandarin_orange_text) to "KLAB",
+                context.getString(R.string.nectarine_text) to "GH",
+                context.getString(R.string.orange_text) to "LABCD",
+                context.getString(R.string.peach_text) to "GH",
+                context.getString(R.string.pear_text) to "HI",
+                context.getString(R.string.persimmon_text) to "J",
+                context.getString(R.string.pineapple_guava_text) to "JK",
+                context.getString(R.string.plum_text) to "FGHI",
+                context.getString(R.string.pluot_text) to "FGHI",
+                context.getString(R.string.pomegranate_text) to "JK",
+                context.getString(R.string.pomelo_text) to "KLAB",
+                context.getString(R.string.tangerine_text) to "KLAB",
+                context.getString(R.string.unknown_text) to "ABCDEFGHIJKL"
             ).forEach {
                 database.fruitTreeDAO.insert(Fruit(fruitName = it.first, fruitSeason = it.second))
             }

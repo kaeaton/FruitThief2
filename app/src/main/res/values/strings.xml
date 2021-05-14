@@ -14,4 +14,28 @@
     <string name="in_season_fruit_text">In Season Fruit</string>
     <string name="filter_text">Filter</string>
     <string name="add_tree_fab_description_text">Add Tree Button</string>
+
+    <string name="apple_text">Apple</string>
+    <string name="apricot_text">Apricot</string>
+    <string name="asian_pear_text">Asian Pear</string>
+    <string name="avocado_text">Avocado</string>
+    <string name="blackberry_text">Blackberry Bush</string>
+    <string name="fig_text">Fig</string>
+    <string name="grapefruit_text">Grapefruit</string>
+    <string name="lemon_text">Lemon</string>
+    <string name="lime_text">Lime</string>
+    <string name="loquat_text">Loquat</string>
+    <string name="mandarin_orange_text">Mandarin Orange</string>
+    <string name="nectarine_text">Nectarine</string>
+    <string name="orange_text">Orange</string>
+    <string name="peach_text">Peach</string>
+    <string name="pear_text">Pear</string>
+    <string name="persimmon_text">Persimmon</string>
+    <string name="pineapple_guava_text">Pineapple Guava</string>
+    <string name="plum_text">Plum</string>
+    <string name="pluot_text">Pluot</string>
+    <string name="pomegranate_text">Pomegranate</string>
+    <string name="pomelo_text">Pomelo</string>
+    <string name="tangerine_text">Tangerine</string>
+    <string name="unknown_text">Unknown</string>
 </resources>
