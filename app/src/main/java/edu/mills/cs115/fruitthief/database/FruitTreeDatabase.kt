@@ -45,6 +45,7 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                         .build()
                     runBlocking {
                         populateFruitTable(instance)
+                        populateTreeTable(instance)
                     }
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
@@ -55,16 +56,25 @@ abstract class FruitTreeDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateFruitTable(database: FruitTreeDatabase){
-            listOf("Apple" to "HIJK", "Apricot" to "FG", "Asian Pear" to "IJK",
-            "Avocado" to "FGH", "Blackberry Bush" to "GHI", "Fig" to "IJFG",
-            "Grapefruit" to "LABCD", "Lemon" to "ABCDEFGHIJKL", "Lime" to "KLABCDEFG",
-            "Loquat" to "EFG", "Mandarin Orange" to "KLAB", "Orange" to "LABCD",
-            "Peach" to "GH", "Pear" to "HI", "Persimmon" to "J", "Pineapple Guava" to "JK",
-            "Plum" to "FGHI", "Pluot" to "FGHI", "Pomegranate" to "JK", "Pomelo" to "KLAB",
-            "Tangerine" to "KLAB", "Unknown" to "ABCDEFGHIJKL").forEach {
+        suspend fun populateFruitTable(database: FruitTreeDatabase) {
+            listOf(
+                "Apple" to "HIJK", "Apricot" to "FG", "Asian Pear" to "IJK",
+                "Avocado" to "FGH", "Blackberry Bush" to "GHI", "Fig" to "IJFG",
+                "Grapefruit" to "LABCD", "Lemon" to "ABCDEFGHIJKL", "Lime" to "KLABCDEFG",
+                "Loquat" to "EFG", "Mandarin Orange" to "KLAB", "Orange" to "LABCD",
+                "Peach" to "GH", "Pear" to "HI", "Persimmon" to "J", "Pineapple Guava" to "JK",
+                "Plum" to "FGHI", "Pluot" to "FGHI", "Pomegranate" to "JK", "Pomelo" to "KLAB",
+                "Tangerine" to "KLAB", "Unknown" to "ABCDEFGHIJKL"
+            ).forEach {
                 database.fruitTreeDAO.insert(Fruit(fruitName = it.first, fruitSeason = it.second))
             }
+        }
+
+        // For testing purposes only
+        suspend fun populateTreeTable(database: FruitTreeDatabase) {
+            database.fruitTreeDAO.insert(Tree(0, 7, 37.892861, -122.078400))
+            database.fruitTreeDAO.insert(Tree(0, 1, 37.870098, -122.070084))
+            database.fruitTreeDAO.insert(Tree(0, 0, 37.897702, -122.083549))
         }
     }
 }
