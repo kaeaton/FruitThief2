@@ -37,10 +37,9 @@ class MapFragment : Fragment() {
     private lateinit var currentLocation: LatLng
     private var locationCoordinates = LatLng(37.804363, -122.271111) // Oakland
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val latitudeString = requireNotNull(this.activity).getString(R.string.latitude_text)
-    private val longitudeString = requireNotNull(this.activity).getString(R.string.longitude_text)
-    private val unknownTypeString =
-        requireNotNull(this.activity).getString(R.string.unknown_type_text)
+    private lateinit var latitudeString: String
+    private lateinit var longitudeString: String
+    private lateinit var unknownTypeString: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +52,9 @@ class MapFragment : Fragment() {
             .get(MarkerViewModel::class.java)
         mapViewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
+        latitudeString = application.getString(R.string.latitude_text)
+        longitudeString = application.getString(R.string.longitude_text)
+        unknownTypeString = application.getString(R.string.unknown_type_text)
 
         treesToDisplay = viewModel.allTrees
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)

@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 
 class FilterTreesFragment : Fragment() {
     private lateinit var viewModel: FilterTreesViewModel
-    private val anyString = requireNotNull(this.activity).getString(R.string.any_text)
+    private lateinit var anyString: String
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -30,6 +30,8 @@ class FilterTreesFragment : Fragment() {
                 inflater, R.layout.fragment_filter_trees, container, false
             )
 
+        val application = requireNotNull(this.activity).application
+        anyString = application.getString(R.string.any_text)
         viewModel = ViewModelProvider(this).get(FilterTreesViewModel::class.java)
 
         val dataSource =
