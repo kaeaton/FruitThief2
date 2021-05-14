@@ -1,4 +1,45 @@
 <resources>
-    <string name="app_name">FruitThief</string>
+    <string name="app_name">Fruit Thief</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Fruit Thief</string>
+    <string name="nav_header_subtitle">Navigation</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_tree_text">Add Tree</string>
+    <string name="fruit_type_text">Fruit Type</string>
+    <string name="filter_trees_text">Filter Trees</string>
+    <string name="in_season_fruit_text">In Season Fruit</string>
+    <string name="filter_text">Filter</string>
+    <string name="add_tree_fab_description_text">Add Tree Button</string>
+
+    <string name="latitude_text">Latitude</string>
+    <string name="longitude_text">Longitude</string>
+
+    <string name="apple_text">Apple</string>
+    <string name="apricot_text">Apricot</string>
+    <string name="asian_pear_text">Asian Pear</string>
+    <string name="avocado_text">Avocado</string>
+    <string name="blackberry_text">Blackberry Bush</string>
+    <string name="fig_text">Fig</string>
+    <string name="grapefruit_text">Grapefruit</string>
+    <string name="lemon_text">Lemon</string>
+    <string name="lime_text">Lime</string>
+    <string name="loquat_text">Loquat</string>
+    <string name="mandarin_orange_text">Mandarin Orange</string>
+    <string name="nectarine_text">Nectarine</string>
+    <string name="orange_text">Orange</string>
+    <string name="peach_text">Peach</string>
+    <string name="pear_text">Pear</string>
+    <string name="persimmon_text">Persimmon</string>
+    <string name="pineapple_guava_text">Pineapple Guava</string>
+    <string name="plum_text">Plum</string>
+    <string name="pluot_text">Pluot</string>
+    <string name="pomegranate_text">Pomegranate</string>
+    <string name="pomelo_text">Pomelo</string>
+    <string name="tangerine_text">Tangerine</string>
+    <string name="unknown_type_text">Unknown Type</string>
+    <string name="any_text">Any</string>
 </resources>
