@@ -11,6 +11,8 @@ import kotlinx.coroutines.runBlocking
 abstract class FruitTreeDatabase : RoomDatabase() {
     abstract val fruitTreeDAO: FruitTreeDAO
 
+    // method to generate fruit and trees
+
     companion object {
         @Volatile
         private var INSTANCE: FruitTreeDatabase? = null
@@ -46,8 +48,11 @@ abstract class FruitTreeDatabase : RoomDatabase() {
                         .build()
                     runBlocking {
                         populateFruitTable(instance, context)
+
+                        // for testing only
                         populateTreeTable(instance)
                     }
+
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
                 }
