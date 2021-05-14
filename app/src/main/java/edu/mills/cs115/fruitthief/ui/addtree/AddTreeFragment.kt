@@ -19,9 +19,9 @@ import kotlinx.coroutines.runBlocking
 
 class AddTreeFragment : Fragment() {
     private lateinit var viewModel: AddTreeViewModel
-    private val latitudeString = requireNotNull(this.activity).getString(R.string.latitude_text)
-    private val longitudeString = requireNotNull(this.activity).getString(R.string.longitude_text)
-    private val unknownString = requireNotNull(this.activity).getString(R.string.unknown_type_text)
+    private lateinit var latitudeString: String
+    private lateinit var longitudeString: String
+    private lateinit var unknownTypeString: String
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -33,7 +33,10 @@ class AddTreeFragment : Fragment() {
             .inflate<FragmentAddTreeBinding>(
                 inflater, R.layout.fragment_add_tree, container, false
             )
-
+        val application = requireNotNull(this.activity).application
+        latitudeString = application.getString(R.string.latitude_text)
+        longitudeString = application.getString(R.string.longitude_text)
+        unknownTypeString = application.getString(R.string.unknown_type_text)
         viewModel = ViewModelProvider(this).get(AddTreeViewModel::class.java)
 
         val dataSource =
@@ -60,11 +63,11 @@ class AddTreeFragment : Fragment() {
                 position: Int, id: Long
             ) {
                 val item = adapterView.getItemAtPosition(position)
-                viewModel.onItemSelected(item?.toString() ?: unknownString)
+                viewModel.onItemSelected(item?.toString() ?: unknownTypeString)
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                viewModel.onItemSelected(unknownString)
+                viewModel.onItemSelected(unknownTypeString)
             }
         }
 
