@@ -110,7 +110,6 @@ class MapFragment : Fragment() {
 
                                 mapViewModel.onFabClicked()
                             }
-                            // Got last known location. In some rare situations this can be null.
                         }
                 }
             }
@@ -176,7 +175,6 @@ class MapFragment : Fragment() {
                                 )
                             )
                         }
-                        // Got last known location. In some rare situations this can be null.
                     }
             }
         }
